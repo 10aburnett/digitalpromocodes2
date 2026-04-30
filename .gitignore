@@ -1,0 +1,196 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Production
+/build
+/dist
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local env files - NEVER COMMIT CREDENTIALS
+.env
+.env*
+.env.sync
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Data files (potentially sensitive)
+*.csv
+*.numbers
+*.xlsx
+*.xls
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/ 
+# local db artifacts
+*.dump
+*.sql
+
+# Conflicting static files (served by app routes)
+public/robots.txt
+
+# Content generation artifacts (persisted fingerprints with auto-rotation)
+data/content/.fingerprints.jsonl
+
+# Content gen run artifacts (never bloat the repo)
+data/content/cache/
+data/content/raw/ai-run-*.jsonl
+data/content/raw/rejects-*.jsonl
+data/content/raw/_archive/
+data/content/hub-review.csv
+data/content/hub-override-hits.csv
+data/content/cadence-review.csv
+
+# Lock files and process control
+data/locks/
+data/content/master/.consolidate.lock
+*.backup*.jsonl
+/tmp/whp-audit
+
+# Performance audit files (local only)
+src/app/api/_trace/
+src/lib/perf/
+
+# Legacy archive (contains old fingerprints - never deploy)
+archive/
+
+# === Data dumps + DB backups — do not ship to GitHub ===
+# These are operational artifacts kept locally; the parent repo committed them, the fork shouldn't.
+data/content/master/successes*.jsonl
+data/content/master/successes*.jsonl.*
+data/content/master/successes-*.jsonl
+data/content/master/*.pre-*.jsonl
+data/content/master/*-FINAL.jsonl
+data/content/master/*PUBLISH-READY.jsonl
+data/production-deals-export.json
+data/neon/
+data/proofs/
+production-data-backup.json
+whop_data_backup.sql
+whops_backup.csv
+whops-export.json
+comprehensive_database_backup.sql
+successes_*.jsonl
+successes_*.csv
+top-100-rewritten-content.json
+rewritten-content.json
+Whop\ \(1\).json
+ChatGPT*.png
+ChatGPT*.jpg
+__disabled_proofs/
+backups/
+Keep/
+exports/
+test-results/
+
+# === More data exports + analysis output ===
+data/content-export*.jsonl
+data/content-export*.json
+data/content-cleaned.jsonl
+data/recovery/
+data/content/master/*.bak.jsonl
+data/content/master/*.bak
+data/revive-*.json
+analysis/
+chatgpt-*.md
+chatgpt-*.txt

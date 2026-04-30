@@ -1,0 +1,1943 @@
+{
+  "generatedAt": "2025-12-13T14:20:28.505Z",
+  "count": 242,
+  "description": "Deals with promo codes that are currently retired/gone. Candidates for future revival.",
+  "deals": [
+    {
+      "slug": "kodas-prop-picks",
+      "name": "Koda's Prop Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:49.122Z"
+    },
+    {
+      "slug": "social-university",
+      "name": "Social University",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:49.093Z"
+    },
+    {
+      "slug": "crypto-hungary-market-maker",
+      "name": "Crypto Hungary Market Maker",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:49.038Z"
+    },
+    {
+      "slug": "dt",
+      "name": "DT",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:48.915Z"
+    },
+    {
+      "slug": "th-picks",
+      "name": "TH Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:48.857Z"
+    },
+    {
+      "slug": "vip-club-membership-tier",
+      "name": "VIP CLUB Membership Tier",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:48.674Z"
+    },
+    {
+      "slug": "zapify-amazon-oawholesale",
+      "name": "Zapify Amazon OA/Wholesale",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:47.158Z"
+    },
+    {
+      "slug": "vito-commercis-free-community",
+      "name": "Vito Commerci's Free Community",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.816Z"
+    },
+    {
+      "slug": "got-lockz",
+      "name": "Got Lockz?",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.788Z"
+    },
+    {
+      "slug": "attention-economy-club",
+      "name": "Attention Economy Club",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.474Z"
+    },
+    {
+      "slug": "cash-it-betting-vip",
+      "name": "Cash It Betting VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.445Z"
+    },
+    {
+      "slug": "the-lock-talk-long-term",
+      "name": "The Lock Talk Long-Term",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.269Z"
+    },
+    {
+      "slug": "potion-tracker-starter",
+      "name": "Potion Tracker Starter",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.212Z"
+    },
+    {
+      "slug": "jokers-hideout",
+      "name": "Joker's Hideout",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:46.157Z"
+    },
+    {
+      "slug": "legup-picks",
+      "name": "LegUP Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:45.751Z"
+    },
+    {
+      "slug": "gamblers-paradise-prem",
+      "name": "Gamblers Paradise Prem",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:44.297Z"
+    },
+    {
+      "slug": "title-iv-d-university",
+      "name": "TITLE IV D UNIVERSITY",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.330Z"
+    },
+    {
+      "slug": "advanced-english-community",
+      "name": "Advanced English Community",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.299Z"
+    },
+    {
+      "slug": "etu-private-journal-access",
+      "name": "ETU Private Journal Access",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.272Z"
+    },
+    {
+      "slug": "shark-action-group-og",
+      "name": "Shark Action Group OG",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.244Z"
+    },
+    {
+      "slug": "copy-paste-digital-creator",
+      "name": "Copy-Paste Digital Creator",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.215Z"
+    },
+    {
+      "slug": "thumbnail-academy-",
+      "name": "Thumbnail Academy +",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.187Z"
+    },
+    {
+      "slug": "bookie-breakers-vip",
+      "name": "Bookie Breakers VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.157Z"
+    },
+    {
+      "slug": "millionaires-metaforum-live",
+      "name": "Millionaires MetaForum Live",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.131Z"
+    },
+    {
+      "slug": "tlr-distribution",
+      "name": "TLR Distribution",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.105Z"
+    },
+    {
+      "slug": "the-bible-of-aesthetics",
+      "name": "The Bible of Aesthetics",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.078Z"
+    },
+    {
+      "slug": "life-rpg",
+      "name": "Life RPG",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.050Z"
+    },
+    {
+      "slug": "nfx-academy-vip",
+      "name": "NFX Academy VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:38.021Z"
+    },
+    {
+      "slug": "esprit-boursier-accs-discord",
+      "name": "Esprit Boursier Accès Discord",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.992Z"
+    },
+    {
+      "slug": "sharp-picks",
+      "name": "Sharp Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.951Z"
+    },
+    {
+      "slug": "prestige",
+      "name": "Prestige",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.924Z"
+    },
+    {
+      "slug": "bfx-signals",
+      "name": "BFX Signals",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.898Z"
+    },
+    {
+      "slug": "bankroll-bros-weekly",
+      "name": "BANKROLL BROS WEEKLY",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.869Z"
+    },
+    {
+      "slug": "bettorprocess-member",
+      "name": "BettorProcess Member",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.842Z"
+    },
+    {
+      "slug": "algorithmic-trading-blueprint",
+      "name": "Algorithmic Trading Blueprint",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.815Z"
+    },
+    {
+      "slug": "platinum-access",
+      "name": "Platinum Access",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.788Z"
+    },
+    {
+      "slug": "copytraders-worst-copytraders",
+      "name": "CopyTrader's WORST Copytraders",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.678Z"
+    },
+    {
+      "slug": "the-wizards-brew",
+      "name": "The Wizard's Brew",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.645Z"
+    },
+    {
+      "slug": "zulabs-academy",
+      "name": "ZULABS ACADEMY",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.618Z"
+    },
+    {
+      "slug": "the-mosh-pick",
+      "name": "The Mosh Pick",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.582Z"
+    },
+    {
+      "slug": "bet-sports-daily",
+      "name": "Bet Sports Daily",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.555Z"
+    },
+    {
+      "slug": "the-hangar",
+      "name": "The Hangar",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.527Z"
+    },
+    {
+      "slug": "funko-corps-monthly",
+      "name": "Funko Corps Monthly",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.298Z"
+    },
+    {
+      "slug": "xauusd-signals-monthly",
+      "name": "XAUUSD Signals Monthly",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:37.215Z"
+    },
+    {
+      "slug": "champagne-trades-premium",
+      "name": "Champagne Trades Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:36.900Z"
+    },
+    {
+      "slug": "digital-vault",
+      "name": "Digital Vault",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:36.583Z"
+    },
+    {
+      "slug": "goat-picks-vip",
+      "name": "GOAT PICKS VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:36.332Z"
+    },
+    {
+      "slug": "doctorate-",
+      "name": "Doctorate 🎓",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:36.305Z"
+    },
+    {
+      "slug": "nova-select-analytics",
+      "name": "Nova Select Analytics+",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:36.276Z"
+    },
+    {
+      "slug": "sharpmoney-ev-main-markets",
+      "name": "SharpMoney +EV Main Markets",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:35.935Z"
+    },
+    {
+      "slug": "premium-live-trading",
+      "name": "Premium Live Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:35.796Z"
+    },
+    {
+      "slug": "vip-1-month",
+      "name": "VIP 1 MONTH",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.924Z"
+    },
+    {
+      "slug": "sbt-20-off",
+      "name": "SBT 20 Off",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.842Z"
+    },
+    {
+      "slug": "sourced-betting-bots",
+      "name": "Sourced Betting Bots",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.812Z"
+    },
+    {
+      "slug": "bigplaynate-monthly-gl",
+      "name": "BigPlayNate Monthly GL",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.783Z"
+    },
+    {
+      "slug": "lucky-arbitrage-premium",
+      "name": "Lucky Arbitrage Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.698Z"
+    },
+    {
+      "slug": "geraldine-trades",
+      "name": "Geraldine Trades",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.670Z"
+    },
+    {
+      "slug": "supply-drop-monitors-premium",
+      "name": "Supply Drop Monitors - Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.638Z"
+    },
+    {
+      "slug": "labstrike",
+      "name": "LabStrike",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.610Z"
+    },
+    {
+      "slug": "scousepicks-premium",
+      "name": "ScousePicks Premium💎",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.579Z"
+    },
+    {
+      "slug": "american-dream-trading-crypto",
+      "name": "American Dream Trading Crypto",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.549Z"
+    },
+    {
+      "slug": "signal-vault",
+      "name": "Signal Vault",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.490Z"
+    },
+    {
+      "slug": "euphoric-trading-elite",
+      "name": "Euphoric Trading ELITE",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.461Z"
+    },
+    {
+      "slug": "snttrades-nur-videokurs",
+      "name": "SNTTRADES NUR VIDEOKURS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.432Z"
+    },
+    {
+      "slug": "the-parlay-pros",
+      "name": "The Parlay Pros",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.403Z"
+    },
+    {
+      "slug": "oceanaio-exclusive",
+      "name": "OceanAIO Exclusive+",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.373Z"
+    },
+    {
+      "slug": "opc-all-plays",
+      "name": "OPC ALL PLAYS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.344Z"
+    },
+    {
+      "slug": "ignited-tools",
+      "name": "Ignited Tools",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.315Z"
+    },
+    {
+      "slug": "marketing-party-central",
+      "name": "Marketing Party Central",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.286Z"
+    },
+    {
+      "slug": "defi-mojo",
+      "name": "DeFi Mojo",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.258Z"
+    },
+    {
+      "slug": "providencefx-coaching-lab",
+      "name": "ProvidenceFX Coaching Lab",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.229Z"
+    },
+    {
+      "slug": "wagerhub-premium",
+      "name": "WagerHub Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.199Z"
+    },
+    {
+      "slug": "ez-bulls-trading",
+      "name": "EZ Bulls Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.171Z"
+    },
+    {
+      "slug": "sneaker-cookgroup",
+      "name": "Sneaker Cookgroup!",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.143Z"
+    },
+    {
+      "slug": "vegas-shark-premium-picks-",
+      "name": "Vegas Shark Premium Picks 🦈💎",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.116Z"
+    },
+    {
+      "slug": "all-access-vip",
+      "name": "All Access [VIP]",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.089Z"
+    },
+    {
+      "slug": "print-money-w-tiktok",
+      "name": "Print Money W TikTok",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.060Z"
+    },
+    {
+      "slug": "icelocks-premium",
+      "name": "IceLocks Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.032Z"
+    },
+    {
+      "slug": "the-dojo",
+      "name": "The Dojo",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:34.004Z"
+    },
+    {
+      "slug": "smart-money-vip",
+      "name": "Smart Money VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.975Z"
+    },
+    {
+      "slug": "max-maserati-model-pro",
+      "name": "Max Maserati Model - Pro",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.947Z"
+    },
+    {
+      "slug": "zenith-trading",
+      "name": "Zenith Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.920Z"
+    },
+    {
+      "slug": "money-momentum",
+      "name": "Money Momentum",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.893Z"
+    },
+    {
+      "slug": "dsplocks-premium",
+      "name": "DSPLocks Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.866Z"
+    },
+    {
+      "slug": "premium-weekly-membership",
+      "name": "Premium - Weekly membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.837Z"
+    },
+    {
+      "slug": "parlay-pros",
+      "name": "Parlay Pros",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.811Z"
+    },
+    {
+      "slug": "hybrid-whales-premium",
+      "name": "Hybrid Whales PREMIUM",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.754Z"
+    },
+    {
+      "slug": "am-elites-premium",
+      "name": "AM ELITES PREMIUM",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.728Z"
+    },
+    {
+      "slug": "strategy-school",
+      "name": "Strategy School",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.695Z"
+    },
+    {
+      "slug": "lune-trading-premium",
+      "name": "Lune Trading Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.668Z"
+    },
+    {
+      "slug": "palm-fx-copytrader",
+      "name": "PALM FX Copytrader",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.640Z"
+    },
+    {
+      "slug": "sureedge-bets",
+      "name": "SureEdge Bets",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.612Z"
+    },
+    {
+      "slug": "shisha-traders-club",
+      "name": "Shisha Traders Club",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.584Z"
+    },
+    {
+      "slug": "alive-trades-alliance-ata",
+      "name": "ALIVE Trades Alliance (ATA)",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.497Z"
+    },
+    {
+      "slug": "paris-young-academy",
+      "name": "Paris young academy",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.469Z"
+    },
+    {
+      "slug": "atm-picks-pass",
+      "name": "ATM PICKS PASS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.440Z"
+    },
+    {
+      "slug": "new-years-sale",
+      "name": "New Years Sale",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.387Z"
+    },
+    {
+      "slug": "education-trading-group",
+      "name": "Education Trading Group",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.358Z"
+    },
+    {
+      "slug": "ofm-empire-vip-marketplace",
+      "name": "OFM Empire VIP Marketplace",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.329Z"
+    },
+    {
+      "slug": "phantombets-premium",
+      "name": "Phantom_Bets Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.301Z"
+    },
+    {
+      "slug": "arbitrage-alley-pro",
+      "name": "Arbitrage Alley Pro",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.271Z"
+    },
+    {
+      "slug": "framework",
+      "name": "Framework",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.243Z"
+    },
+    {
+      "slug": "dxb-crypto-investors-club",
+      "name": "DXB Crypto Investors Club",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.214Z"
+    },
+    {
+      "slug": "oracle-insights-qt-indicator",
+      "name": "Oracle Insight's QT Indicator",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.185Z"
+    },
+    {
+      "slug": "film-insider",
+      "name": "Film Insider",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.158Z"
+    },
+    {
+      "slug": "tipsonpips",
+      "name": "TipsOnPips",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.105Z"
+    },
+    {
+      "slug": "streaming-mentorship",
+      "name": "STREAMING MENTORSHIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.075Z"
+    },
+    {
+      "slug": "blockchain-bureau-apprentice",
+      "name": "Blockchain Bureau Apprentice",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.046Z"
+    },
+    {
+      "slug": "x-levels-pro-tradex",
+      "name": "X-Levels [Pro+] (TradeX)",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:33.018Z"
+    },
+    {
+      "slug": "the-financial-cloud-combo",
+      "name": "The Financial Cloud Combo",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.958Z"
+    },
+    {
+      "slug": "charts-membership",
+      "name": "Charts Membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.932Z"
+    },
+    {
+      "slug": "internet-money-trading",
+      "name": "Internet Money Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.897Z"
+    },
+    {
+      "slug": "primepicks-premium-membership",
+      "name": "PrimePicks Premium Membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.867Z"
+    },
+    {
+      "slug": "od-pilna-naryst",
+      "name": "OD Pilna Narystė",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.841Z"
+    },
+    {
+      "slug": "tail-it-vip",
+      "name": "Tail It VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.785Z"
+    },
+    {
+      "slug": "coliseeprivateclub-premium",
+      "name": "ColiseePrivateClub Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.758Z"
+    },
+    {
+      "slug": "algobot-premium",
+      "name": "AlgoBot Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.724Z"
+    },
+    {
+      "slug": "amazon-fba-success-network",
+      "name": "Amazon FBA Success Network",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.670Z"
+    },
+    {
+      "slug": "resale-radar-discord",
+      "name": "Resale Radar Discord",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.526Z"
+    },
+    {
+      "slug": "champions-sports-bets-premium",
+      "name": "Champions Sports Bets Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.494Z"
+    },
+    {
+      "slug": "full-port-university-annual",
+      "name": "Full Port University Annual",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:32.404Z"
+    },
+    {
+      "slug": "only-the-punchers",
+      "name": "Only The Punchers",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.614Z"
+    },
+    {
+      "slug": "flex-fx-vip-signals",
+      "name": "Flex FX VIP Signals",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.574Z"
+    },
+    {
+      "slug": "reverse-split-snipers",
+      "name": "Reverse Split Snipers",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.456Z"
+    },
+    {
+      "slug": "goodfellas-sports-discord",
+      "name": "GoodFellas Sports Discord",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.337Z"
+    },
+    {
+      "slug": "printsquad-fnp-trades",
+      "name": "PrintSquad | FNP Trades",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.308Z"
+    },
+    {
+      "slug": "the-liquidity-vault",
+      "name": "The Liquidity Vault",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.280Z"
+    },
+    {
+      "slug": "financing-funnel-formula",
+      "name": "Financing Funnel Formula",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.252Z"
+    },
+    {
+      "slug": "paidofflock-premium",
+      "name": "PaidOffLock Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.196Z"
+    },
+    {
+      "slug": "tradelabs-ultimate-trading-bot",
+      "name": "TradeLabs Ultimate Trading Bot",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 2,
+      "updatedAt": "2025-12-05T12:58:31.169Z"
+    },
+    {
+      "slug": "dojo-deals",
+      "name": "Dojo Deals",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.143Z"
+    },
+    {
+      "slug": "abhey-takes-down-vegas-free",
+      "name": "Abhey Takes Down Vegas - Free",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.116Z"
+    },
+    {
+      "slug": "sharp-edge-premium",
+      "name": "Sharp Edge Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.089Z"
+    },
+    {
+      "slug": "amzshifu-university",
+      "name": "AMZSHIFU UNIVERSITY",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.034Z"
+    },
+    {
+      "slug": "wi-fi-route-club",
+      "name": "Wi-Fi Route Club",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:31.007Z"
+    },
+    {
+      "slug": "infra-trade-telegram-alerts",
+      "name": "INFRA TRADE TELEGRAM ALERTS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.948Z"
+    },
+    {
+      "slug": "meta-brand-scaling",
+      "name": "META BRAND SCALING",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.921Z"
+    },
+    {
+      "slug": "the-trading-syndicate",
+      "name": "The Trading Syndicate",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.835Z"
+    },
+    {
+      "slug": "lotto-parlays-player-props",
+      "name": "Lotto Parlays & Player Props",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.806Z"
+    },
+    {
+      "slug": "learningcrypto-premium",
+      "name": "Learning:Crypto Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.749Z"
+    },
+    {
+      "slug": "lune-auto-trader",
+      "name": "Lune Auto Trader",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.720Z"
+    },
+    {
+      "slug": "leverage-university",
+      "name": "Leverage University",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.692Z"
+    },
+    {
+      "slug": "viralcash",
+      "name": "ViralCash",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.634Z"
+    },
+    {
+      "slug": "dynamo-vip",
+      "name": "Dynamo VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.606Z"
+    },
+    {
+      "slug": "yutaka-alpha",
+      "name": "Yutaka Alpha",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.577Z"
+    },
+    {
+      "slug": "premium-trader",
+      "name": "Premium Trader",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.548Z"
+    },
+    {
+      "slug": "dealking",
+      "name": "DealKing",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.461Z"
+    },
+    {
+      "slug": "betmagic-pro-membership",
+      "name": "BetMagic Pro Membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.434Z"
+    },
+    {
+      "slug": "powerhomes-tools-pro",
+      "name": "PowerHomes Tools PRO",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.405Z"
+    },
+    {
+      "slug": "hypernova-membership",
+      "name": "Hypernova Membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.348Z"
+    },
+    {
+      "slug": "sharpmoney-ev-player-props",
+      "name": "SharpMoney +EV Player Props",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.321Z"
+    },
+    {
+      "slug": "the-currency-merchant-vip",
+      "name": "The Currency Merchant VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.258Z"
+    },
+    {
+      "slug": "cyber-study-group",
+      "name": "Cyber Study Group",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.232Z"
+    },
+    {
+      "slug": "triple-7-parlays",
+      "name": "Triple 7 Parlays",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.177Z"
+    },
+    {
+      "slug": "unlockable-character",
+      "name": "Unlockable Character",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.150Z"
+    },
+    {
+      "slug": "maxalgo-traders-toolkit",
+      "name": "MaxAlgo - Traders Toolkit",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.124Z"
+    },
+    {
+      "slug": "american-dream-mentorship",
+      "name": "American Dream Mentorship",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.097Z"
+    },
+    {
+      "slug": "lordsports-baseball",
+      "name": "LordSports Baseball",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.070Z"
+    },
+    {
+      "slug": "traders-pathway-discord-access",
+      "name": "Traders Pathway Discord Access",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.043Z"
+    },
+    {
+      "slug": "master-the-bull-seminar",
+      "name": "Master The Bull Seminar",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:30.015Z"
+    },
+    {
+      "slug": "1-month-premium",
+      "name": "1 Month Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.986Z"
+    },
+    {
+      "slug": "triad-24",
+      "name": "Triad 24'",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.958Z"
+    },
+    {
+      "slug": "nbl-community-access",
+      "name": "NBL Community Access",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.900Z"
+    },
+    {
+      "slug": "lade-backk-algo-indicator",
+      "name": "Lade Backk Algo Indicator",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.874Z"
+    },
+    {
+      "slug": "msu-kb-bets-discord",
+      "name": "MSU KB Bets Discord",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.845Z"
+    },
+    {
+      "slug": "espn-bens-sportcenter",
+      "name": "ESPN Ben's Sportcenter",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.819Z"
+    },
+    {
+      "slug": "papecheck-picks-community",
+      "name": "Papecheck Picks Community",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.792Z"
+    },
+    {
+      "slug": "soccer-picks-master-vip-club",
+      "name": "Soccer Picks Master VIP Club",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.738Z"
+    },
+    {
+      "slug": "ftg-trading",
+      "name": "FTG TRADING",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.711Z"
+    },
+    {
+      "slug": "enrich-trades-blueprint",
+      "name": "Enrich Trades Blueprint",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.683Z"
+    },
+    {
+      "slug": "trading-louis-stream-chat",
+      "name": "Trading Louis Stream + Chat",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.628Z"
+    },
+    {
+      "slug": "freecash-premium",
+      "name": "FreeCash Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.603Z"
+    },
+    {
+      "slug": "prodigy-picks-access",
+      "name": "Prodigy Picks Access",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.491Z"
+    },
+    {
+      "slug": "dots-trading-bias-indicator",
+      "name": "DOTS Trading Bias Indicator",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.458Z"
+    },
+    {
+      "slug": "fx-telepath-diamond-membership",
+      "name": "FX Telepath Diamond Membership",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.432Z"
+    },
+    {
+      "slug": "ricocapital-member",
+      "name": "RicoCapital Member",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.347Z"
+    },
+    {
+      "slug": "drysdale-trading-group",
+      "name": "Drysdale Trading Group",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.320Z"
+    },
+    {
+      "slug": "power-picks",
+      "name": "Power Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.293Z"
+    },
+    {
+      "slug": "build-your-first-app-with-ai",
+      "name": "Build Your First App With Ai",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.264Z"
+    },
+    {
+      "slug": "premium-plan",
+      "name": "Premium Plan",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.236Z"
+    },
+    {
+      "slug": "sf-essential",
+      "name": "SF-Essential",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.179Z"
+    },
+    {
+      "slug": "vip-download-spoofer-bot",
+      "name": "VIP Download & Spoofer Bot",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.151Z"
+    },
+    {
+      "slug": "originationmodeling",
+      "name": "Origination/Modeling",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.122Z"
+    },
+    {
+      "slug": "smart-money-concepts-course",
+      "name": "Smart Money Concepts Course",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.068Z"
+    },
+    {
+      "slug": "crypto-wolf-pack",
+      "name": "Crypto Wolf Pack",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.041Z"
+    },
+    {
+      "slug": "premium-subscription",
+      "name": "Premium Subscription",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:29.014Z"
+    },
+    {
+      "slug": "bors-trading-premium",
+      "name": "Bors Trading Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.987Z"
+    },
+    {
+      "slug": "cryptohub-premium-trading",
+      "name": "Cryptohub Premium Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.932Z"
+    },
+    {
+      "slug": "the-den-indicator-suite",
+      "name": "The Den Indicator Suite",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.903Z"
+    },
+    {
+      "slug": "american-dream-trading-futures",
+      "name": "American Dream Trading Futures",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.877Z"
+    },
+    {
+      "slug": "tcgtracker",
+      "name": "TCGTRACKER",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.849Z"
+    },
+    {
+      "slug": "american-dream-trading-premium",
+      "name": "American Dream Trading Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.822Z"
+    },
+    {
+      "slug": "shocked-crypto-payments",
+      "name": "Shocked (Crypto Payments)",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.794Z"
+    },
+    {
+      "slug": "adt-diamond-lifetime",
+      "name": "ADT Diamond Lifetime",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.432Z"
+    },
+    {
+      "slug": "elite-access-pro",
+      "name": "Elite Access Pro",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.376Z"
+    },
+    {
+      "slug": "flash-fund-premium",
+      "name": "Flash Fund Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.292Z"
+    },
+    {
+      "slug": "premium-access-monthly",
+      "name": "Premium Access | Monthly",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.264Z"
+    },
+    {
+      "slug": "rybets-premium-group",
+      "name": "RYBETS+ Premium Group",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.234Z"
+    },
+    {
+      "slug": "3-days-free-luxury-picks",
+      "name": "3 DAYS FREE Luxury Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:58:28.095Z"
+    },
+    {
+      "slug": "dleyguarda-trading",
+      "name": "D.Leyguarda Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:26.089Z"
+    },
+    {
+      "slug": "betting-central-101",
+      "name": "Betting central 101",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:25.418Z"
+    },
+    {
+      "slug": "basic-trading-mentorship",
+      "name": "Basic Trading Mentorship",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:25.390Z"
+    },
+    {
+      "slug": "daily-straight-plays",
+      "name": "DAILY- STRAIGHT PLAYS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:21.020Z"
+    },
+    {
+      "slug": "pine-script-pro-trader",
+      "name": "Pine Script Pro Trader",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:15.960Z"
+    },
+    {
+      "slug": "ticketvision-trading",
+      "name": "TicketVision Trading",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:14.957Z"
+    },
+    {
+      "slug": "tennisxpert-premium",
+      "name": "TennisXpert Premium",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:13.958Z"
+    },
+    {
+      "slug": "side-hustle-collection",
+      "name": "Side Hustle Collection",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:13.873Z"
+    },
+    {
+      "slug": "-cometleads-tier-1-shuffled",
+      "name": "🌟 CometLeads Tier 1: Shuffled",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:12.113Z"
+    },
+    {
+      "slug": "-the-ofm-incubator-",
+      "name": "🔷 The OFM Incubator 🔷",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:12.083Z"
+    },
+    {
+      "slug": "6-figure-wash-system",
+      "name": "6-Figure Wash System",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:11.791Z"
+    },
+    {
+      "slug": "study-of-chart",
+      "name": "STUDY OF CHART",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:10.264Z"
+    },
+    {
+      "slug": "1",
+      "name": "1ヵ月パス",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:08.080Z"
+    },
+    {
+      "slug": "apex-fitness-and-mind-mastery",
+      "name": "APEX Fitness and Mind Mastery",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:07.016Z"
+    },
+    {
+      "slug": "crypto-capital-vip",
+      "name": "👑CRYPTO CAPITAL - 🥇VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:01.209Z"
+    },
+    {
+      "slug": "bullish-premium-chat",
+      "name": "🚨Bullish Premium Chat🚨",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:56:00.415Z"
+    },
+    {
+      "slug": "ccs-collectibles",
+      "name": "CCS Collectibles",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:59.233Z"
+    },
+    {
+      "slug": "dan-steel-trading-academy",
+      "name": "Dan Steel Trading Academy",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:58.404Z"
+    },
+    {
+      "slug": "dawah-central",
+      "name": "Dawah Central",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:56.459Z"
+    },
+    {
+      "slug": "db-locks",
+      "name": "DB Locks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:55.973Z"
+    },
+    {
+      "slug": "franklin-covers",
+      "name": "FRANKLIN COVERS",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:49.409Z"
+    },
+    {
+      "slug": "httpscercleppmfr",
+      "name": "https://cercleppm.fr",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:46.263Z"
+    },
+    {
+      "slug": "gurus-film-room",
+      "name": "Guru's Film Room",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:43.452Z"
+    },
+    {
+      "slug": "lets-begin-community",
+      "name": "Let's Begin Community",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:42.773Z"
+    },
+    {
+      "slug": "limitless-ai-sport-picks",
+      "name": "Limitless AI Sport Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:41.565Z"
+    },
+    {
+      "slug": "pariahbets",
+      "name": "PariahBets",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:37.600Z"
+    },
+    {
+      "slug": "mindful-af-attentionfocus",
+      "name": "Mindful AF (Attention/Focus).",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:36.280Z"
+    },
+    {
+      "slug": "pham-collectibles-pokalerts",
+      "name": "Pham Collectibles PokéAlerts",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:34.129Z"
+    },
+    {
+      "slug": "player-props",
+      "name": "Player Props",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:32.096Z"
+    },
+    {
+      "slug": "queezy-locks-904",
+      "name": "QUEEZY LOCKS 904",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:29.607Z"
+    },
+    {
+      "slug": "profit-society-inc",
+      "name": "Profit Society Inc.",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:29.515Z"
+    },
+    {
+      "slug": "sports-picks",
+      "name": "Sports Picks",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:27.578Z"
+    },
+    {
+      "slug": "speed-ramp-from-a-to-z",
+      "name": "\"Speed Ramp from A to Z\"",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:27.520Z"
+    },
+    {
+      "slug": "slam-dunk-bets",
+      "name": "Slam Dunk Bets",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:25.247Z"
+    },
+    {
+      "slug": "solo-vintedseekers",
+      "name": "🧍Solo | VintedSeekers",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:24.316Z"
+    },
+    {
+      "slug": "the-ape-asylum",
+      "name": "The Ape Asylum",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:24.170Z"
+    },
+    {
+      "slug": "tby-investments",
+      "name": "TBY Investments",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:21.757Z"
+    },
+    {
+      "slug": "the-mastermind",
+      "name": "The Mastermind",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:21.216Z"
+    },
+    {
+      "slug": "win-the-day-vip",
+      "name": "Win the Day VIP",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:17.330Z"
+    },
+    {
+      "slug": "zeus-trades-apprenticeship",
+      "name": "Zeus Trades Apprenticeship",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:14.332Z"
+    },
+    {
+      "slug": "bigjoebets",
+      "name": "BigJoeBets",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:12.733Z"
+    },
+    {
+      "slug": "x1-alpha-group",
+      "name": "X1 Alpha Group",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:12.296Z"
+    },
+    {
+      "slug": "hopium",
+      "name": "HOPIUM",
+      "retired": true,
+      "retirement": "GONE",
+      "promoCodeCount": 1,
+      "updatedAt": "2025-12-05T12:55:10.951Z"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-12-16T12:44:53.520Z",
+  "mode": "apply",
+  "before": {
+    "totalDeals": 8218,
+    "retiredDeals": 2,
+    "liveDeals": 8216,
+    "currentlyIndex": 200,
+    "currentlyNoindex": 8016
+  },
+  "changes": {
+    "cohortSlugsCount": 101,
+    "cohortDealsInDb": 101,
+    "cohortNeedingIndex": 85,
+    "nonCohortLiveDeals": 8115,
+    "nonCohortNeedingNoindex": 184,
+    "cohortUpdated": 101,
+    "nonCohortUpdated": 8115
+  },
+  "after": {
+    "indexLive": 101,
+    "cohortIndex": 101,
+    "nonCohortIndex": 0,
+    "retired": 2
+  }
+}

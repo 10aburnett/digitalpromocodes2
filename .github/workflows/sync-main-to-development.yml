@@ -1,0 +1,73 @@
+name: Sync development with main (freshness-only)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # lets you run a manual sync any time
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    # Auto-run ONLY when the freshness bot pushes to main
+    # 1) If your bot is a GitHub Action: actor == github-actions[bot]
+    # 2) OR tag your bot commits with [freshness] to match the message
+    if: |
+      github.actor == 'github-actions[bot]' ||
+      contains(github.event.head_commit.message, '[freshness]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure remote branch exists (create if missing)
+        run: |
+          if ! git ls-remote --exit-code origin development >/dev/null 2>&1; then
+            echo "development doesn't exist on origin; creating from main"
+            git checkout -b development origin/main
+            git push -u origin development
+          fi
+
+      - name: Fetch branches
+        run: |
+          git fetch origin main development
+          git checkout development
+          git reset --hard origin/development
+
+      # Prefer fast-forward; if not possible, open a PR instead of pushing
+      - name: Fast-forward development to main if possible
+        id: ff
+        run: |
+          set -e
+          if git merge-base --is-ancestor origin/development origin/main; then
+            git reset --hard origin/main
+            echo "ff_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "ff_ok=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push fast-forward
+        if: steps.ff.outputs.ff_ok == 'true'
+        run: git push origin development
+
+      - name: Open PR when fast-forward not possible
+        if: steps.ff.outputs.ff_ok != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: sync/main-to-development
+          title: "Sync main → development (freshness update; needs review)"
+          body: |
+            Auto-sync triggered by freshness update on `main`.
+            Fast-forward not possible; please resolve and merge.
+          base: development
+          labels: sync, automated

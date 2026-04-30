@@ -1,0 +1,366 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BlogPost {
+  id           String    @id
+  title        String
+  slug         String    @unique
+  content      String
+  excerpt      String?
+  published    Boolean   @default(false)
+  publishedAt  DateTime?
+  pinned       Boolean   @default(false)
+  pinnedAt     DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime
+  authorId     String?
+  authorName   String?
+  content_text String?
+  User         User?     @relation(fields: [authorId], references: [id])
+  Comment      Comment[]
+
+  @@index([createdAt])
+  @@index([pinned])
+  @@index([publishedAt])
+  @@index([published])
+  @@index([slug])
+}
+
+model BulkImport {
+  id          String       @id
+  filename    String
+  totalRows   Int
+  successRows Int
+  failedRows  Int
+  status      ImportStatus @default(PROCESSING)
+  errors      String[]     @default([])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+}
+
+model Comment {
+  id            String        @id
+  content       String
+  authorName    String
+  authorEmail   String
+  status        CommentStatus @default(PENDING)
+  flaggedReason String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime
+  blogPostId    String
+  parentId      String?
+  upvotes       Int           @default(0)
+  downvotes     Int           @default(0)
+  BlogPost      BlogPost      @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  Comment       Comment?      @relation("CommentToComment", fields: [parentId], references: [id], onDelete: Cascade)
+  other_Comment Comment[]     @relation("CommentToComment")
+  CommentVote   CommentVote[]
+
+  @@index([blogPostId])
+  @@index([createdAt])
+  @@index([parentId])
+  @@index([status])
+}
+
+model CommentVote {
+  id        String   @id
+  commentId String
+  voterIP   String
+  voteType  VoteType
+  createdAt DateTime @default(now())
+  Comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, voterIP])
+  @@index([commentId])
+}
+
+model ContactSubmission {
+  id        String        @id
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    ContactStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime
+}
+
+model LegalPage {
+  id        String   @id
+  slug      String   @unique
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model MailingList {
+  id              String            @id
+  email           String            @unique
+  name            String?
+  status          MailingListStatus @default(ACTIVE)
+  source          String?
+  subscribedAt    DateTime          @default(now())
+  unsubscribedAt  DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime
+  reoptinToken    String?
+  statusChangedAt DateTime          @default(now())
+
+  @@index([email])
+  @@index([statusChangedAt])
+  @@index([status])
+  @@index([subscribedAt])
+}
+
+model OfferTracking {
+  id          String     @id
+  actionType  String
+  createdAt   DateTime   @default(now())
+  path        String?
+  promoCodeId String?
+  whopId      String?
+  PromoCode   PromoCode? @relation(fields: [promoCodeId], references: [id])
+  Deal        Deal?      @relation(fields: [whopId], references: [id], onDelete: Cascade)
+
+  @@index([actionType])
+  @@index([createdAt])
+  @@index([promoCodeId])
+  @@index([whopId])
+  // Composite indexes for efficient stats queries
+  @@index([whopId, actionType])
+  @@index([whopId, actionType, createdAt])
+}
+
+model PromoCode {
+  id            String          @id
+  title         String
+  description   String
+  code          String?
+  type          PromoType
+  value         String
+  whopId        String
+  displayOrder  Int             @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime
+  OfferTracking OfferTracking[]
+  Deal          Deal            @relation(fields: [whopId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([type])
+  @@index([whopId])
+  @@index([whopId, displayOrder])
+}
+
+model PromoCodeSubmission {
+  id               String           @id
+  title            String
+  description      String
+  code             String?
+  value            String?
+  whopId           String?
+  customCourseName String?
+  isGeneral        Boolean          @default(false)
+  submitterName    String
+  submitterEmail   String
+  submitterMessage String?
+  status           SubmissionStatus @default(PENDING)
+  reviewedAt       DateTime?
+  reviewedBy       String?
+  adminNotes       String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime
+  ipAddress        String?
+  userAgent        String?
+  Deal             Deal?            @relation(fields: [whopId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([isGeneral])
+  @@index([status])
+  @@index([submitterEmail])
+  @@index([whopId])
+}
+
+model Review {
+  id        String   @id
+  author    String
+  content   String
+  rating    Float    @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  verified  Boolean  @default(false)
+  whopId    String
+  Deal      Deal     @relation(fields: [whopId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([rating])
+  @@index([verified])
+  @@index([whopId])
+}
+
+model Settings {
+  id         String   @id
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  faviconUrl String?
+}
+
+model User {
+  id        String     @id
+  email     String     @unique
+  password  String
+  name      String?
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime
+  BlogPost  BlogPost[]
+}
+
+model Deal {
+  id                  String                @id
+  name                String
+  slug                String                @unique
+  logo                String?
+  description         String?
+  rating              Float                 @default(0)
+  displayOrder        Int                   @default(0)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime
+  publishedAt         DateTime?
+  affiliateLink       String
+  screenshots         String[]              @default([])
+  website             String?
+  price               String?
+  category            String?
+  aboutContent        String?
+  howToRedeemContent  String?
+  promoDetailsContent String?
+  featuresContent     String?
+  termsContent        String?
+  faqContent          String?
+  whopCategory        WhopCategory          @default(OTHER)
+  locale              String?               @default("en")
+  retired             Boolean?              @default(false)
+  retirement          RetirementMode?       @default(NONE)
+  redirectToPath      String?
+  indexingStatus      String?               @default("INDEX")
+  indexing            IndexingStatus        @default(AUTO)
+  OfferTracking       OfferTracking[]
+  PromoCode           PromoCode[]
+  PromoCodeSubmission PromoCodeSubmission[]
+  Review              Review[]
+
+  @@map("Whop")
+  @@index([createdAt])
+  @@index([displayOrder])
+  @@index([indexingStatus])
+  @@index([locale])
+  @@index([name])
+  @@index([publishedAt])
+  @@index([rating])
+  @@index([retired])
+  @@index([retirement])
+  @@index([updatedAt])
+  @@index([whopCategory])
+  // Composite indexes for efficient filtered queries
+  @@index([indexingStatus, retirement])
+  @@index([indexingStatus, retirement, createdAt])
+  @@index([category, indexingStatus, retirement])
+}
+
+model playing_with_neon {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value Float? @db.Real
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+enum ContactStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
+enum ImportStatus {
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum IndexingStatus {
+  INDEX
+  NOINDEX
+  AUTO
+}
+
+enum MailingListStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+}
+
+enum PromoType {
+  DISCOUNT
+  FREE_TRIAL
+  EXCLUSIVE_ACCESS
+  BUNDLE_DEAL
+  LIMITED_TIME
+}
+
+enum RetirementMode {
+  NONE
+  REDIRECT
+  GONE
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DUPLICATE
+  SPAM
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
+enum WhopCategory {
+  PERSONAL_DEVELOPMENT
+  SOCIAL_MEDIA
+  LANGUAGES
+  CAREERS
+  GAMING
+  AI
+  TRADING
+  RECREATION
+  FITNESS
+  REAL_ESTATE
+  TRAVEL
+  SPORTS_BETTING
+  ECOMMERCE
+  BUSINESS
+  RESELLING
+  DATING
+  COMPUTER_SCIENCE
+  PERSONAL_FINANCE
+  OTHER
+}

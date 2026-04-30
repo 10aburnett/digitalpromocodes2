@@ -1,0 +1,441 @@
+{
+  "generatedAt": "2025-12-13T16:29:48.200Z",
+  "count": 200,
+  "criteria": {
+    "hasPromoCode": true,
+    "retired": false,
+    "retirement": "NONE",
+    "slugQualityFilters": [
+      "length >= 8",
+      "token count >= 2",
+      "no leading/trailing hyphens",
+      "no repeated hyphens",
+      "not mostly numeric",
+      "not all generic words",
+      "name length >= 4",
+      "not in denylist"
+    ],
+    "orderBy": [
+      "rating desc",
+      "reviewCount desc",
+      "updatedAt desc"
+    ]
+  },
+  "excluded": {
+    "count": 90,
+    "reasons": {
+      "too short (2 chars)": 1,
+      "single token (1)": 33,
+      "too short (7 chars)": 12,
+      "denylist": 11,
+      "leading/trailing hyphen": 19,
+      "all generic words": 10,
+      "too short (4 chars)": 1,
+      "too short (6 chars)": 3
+    },
+    "slugs": [
+      {
+        "slug": "dt",
+        "reason": "too short (2 chars)"
+      },
+      {
+        "slug": "virality",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "netbetz",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "subscription-with-card",
+        "reason": "denylist"
+      },
+      {
+        "slug": "academy",
+        "reason": "denylist"
+      },
+      {
+        "slug": "exclusive",
+        "reason": "denylist"
+      },
+      {
+        "slug": "monthly-premium-membership",
+        "reason": "denylist"
+      },
+      {
+        "slug": "vulture",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "membership-card-payments",
+        "reason": "denylist"
+      },
+      {
+        "slug": "elite-premium",
+        "reason": "denylist"
+      },
+      {
+        "slug": "blackwolftrading",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "novahittas",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "salvobets",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "vipweek",
+        "reason": "denylist"
+      },
+      {
+        "slug": "peakflow",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "xtyphoon",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "thefacelessformula",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "monthly-plan",
+        "reason": "denylist"
+      },
+      {
+        "slug": "gtg-vip",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "quantsignals",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "edge-pro-beliebt-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "ace-of-trades-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "skyline-deluxe-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "vip-access-package",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "jaypickzem",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "a-z-trading-guide-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "ad-plus",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "vip-monthly",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "pokefinder",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "cellzier",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "elite-vip-membership",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "thumbnail-academy-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "prestige",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "pro-membership",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "pick-pray-vip-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "storyradar",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "doctorate-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "basic-plan",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "premium-membership-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "seller-central-boys-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "labstrike",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "vegas-shark-premium-picks-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "premium-weekly-membership",
+        "reason": "all generic words"
+      },
+      {
+        "slug": "framework",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "tipsonpips",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "ez-algo",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "timeline",
+        "reason": "single token (1)"
+      },
+      {
+        "slug": "influencer-university-",
+        "reason": "leading/trailing hyphen"
+      },
+      {
+        "slug": "prodigy",
+        "reason": "too short (7 chars)"
+      },
+      {
+        "slug": "mysportpick",
+        "reason": "single token (1)"
+      }
+    ]
+  },
+  "slugs": [
+    "4orte-tiktok-upgrade",
+    "60-day-ab-strength-for-golfers",
+    "agency-blueprint",
+    "ai-news-bot",
+    "amazon-fba-mastery",
+    "anonymous-traders",
+    "archetype-premium",
+    "attention-economy-club",
+    "baseline-bets",
+    "big-tick-energy-premium",
+    "blw-master-app",
+    "brand-partnership-blueprint",
+    "bronze-package",
+    "bullfrogs-investment-community",
+    "cash-it-betting-vip",
+    "catalyst-culture-membership",
+    "ceo-trades-lifetime-access",
+    "chart-hackers-pay-with-crypto",
+    "chroma-trading",
+    "clube-de-membros-vip",
+    "collectables-reselling",
+    "cookin-crew",
+    "creator-blueprint",
+    "credit-elevation-program",
+    "crown-crypto-premium",
+    "crypto-hungary-market-maker",
+    "crypto-rich-vip",
+    "currency-creators-vip",
+    "datawise-sports-betting",
+    "desarrollo-exponencial",
+    "digital-wealth-simplified",
+    "dms-picks",
+    "dreamsbets-vip",
+    "dres-playbook",
+    "drop-oclock-membership",
+    "dtr-trading",
+    "easy-ways-to-bet",
+    "elevate-community",
+    "elite-coaches-community",
+    "elite-squad-network",
+    "elitetradingsnipers-20",
+    "envelope-business-deposit",
+    "envxys-kingdom",
+    "etu-100rr-advanced-course",
+    "euphoric-trading-vip",
+    "exclusive-live-bet-chat",
+    "executive-chef",
+    "fba-accelerator-course",
+    "fc-trading-lab",
+    "fit-girl-workouts-program",
+    "flipping-to-freedom-full-offer",
+    "flipping-to-freedom-lego",
+    "fte-model",
+    "fulfilledby-group-a2a-bots",
+    "full-coaching-community",
+    "fvg-mindful-trading-pro",
+    "galaxia-etu",
+    "gamblers-paradise-prem",
+    "gemini-trading-indicator",
+    "gencorp-trading",
+    "global-trade-empire-vip",
+    "gnotz-algo-on-tradingview",
+    "god-backdoor-membership",
+    "golden-goat-trading",
+    "got-lockz",
+    "guitar-mastery",
+    "h1-to-m5-model",
+    "hammer-investments-guarantee",
+    "hermes-sneaker-reselling",
+    "hobbyist-collective-membership",
+    "i-am-trading-standard",
+    "iblv-live",
+    "iblv-trading-vip-discord",
+    "indelible-patrons",
+    "inner-circle-academy",
+    "ivolution-trading",
+    "jarvis-alerts",
+    "jokers-hideout",
+    "jomos-trades",
+    "justpips-trading",
+    "kenny-trades",
+    "kingdom-business-ventures",
+    "kodas-prop-picks",
+    "kryptoknowledge-alpha",
+    "ku2z-king",
+    "kurlyfries-vip-access",
+    "learn-how-to-trade-with-me",
+    "learn-with-ibrahim",
+    "legerity-trading-membership",
+    "legup-picks",
+    "limitless-rei-wholesale",
+    "line-snipers-membership",
+    "live-trading-gold-monthly",
+    "locking-profits-premium",
+    "lunch-money-membership",
+    "lune-trading-pro",
+    "madmoney-trading",
+    "major-wagers",
+    "maxs-premium-access",
+    "media-metas-clips",
+    "membresa-clsica-zero",
+    "membresia-boletos",
+    "merkabah-13",
+    "mikkjo-trading-vip",
+    "mind-of-khan-free-community",
+    "minted-monthly-access",
+    "minted-yearly-access-crypto",
+    "mirror-tradinglifetime",
+    "mobile-money-university",
+    "mogul-builder",
+    "monthly-elites-itm",
+    "mr-wicks-discord",
+    "new-trader-boot-camp-0625",
+    "novo-legacy-trading-vip",
+    "nycalert-pass",
+    "occam-trading-group",
+    "ofm-empire-trends-vip",
+    "ofm-empire-vip-full-access",
+    "ogs-private",
+    "on-brand",
+    "one-trade-system",
+    "options-pro-club",
+    "overman-group",
+    "owls-options-traders-twitter",
+    "papapickz-money-making",
+    "papecheck-picks-premium",
+    "parlay-minds-premium",
+    "parlayxpapi-props",
+    "payout-palace-picks",
+    "pbg-consultation-silver",
+    "phantom-picks",
+    "picxys-premium",
+    "pingted-mois-super",
+    "platinum-vip-ai-sports-picks",
+    "player-props-vip",
+    "plugged-inn-weekly-access",
+    "potion-tracker-starter",
+    "primepicks-premium-free-trial",
+    "profit-house-trading-group",
+    "profit-pioneers",
+    "pure-trading-ventures",
+    "quantumresearch-systems",
+    "rainbowalgo-monthly-access",
+    "relicusroad-pro-bundle",
+    "risen-consulting-coaching",
+    "rja-accelerator-eur",
+    "rl-labs-premium",
+    "road-to-millions-vip",
+    "royal-british",
+    "scarface-trades-premium",
+    "sharp-slips-all-access",
+    "sharpshooters-sports-picks",
+    "shortkingbets-vip",
+    "soccer-slips-premium",
+    "social-university",
+    "sovo-network",
+    "sports-betting-theory",
+    "stupid-simple-devs",
+    "sushi-fnf-access-options",
+    "swush-trading-premium",
+    "system-based-betting",
+    "tailored-trades-premium",
+    "th-picks",
+    "the-ai-space",
+    "the-art-of-financing",
+    "the-crypto-collective-premium",
+    "the-floor-signals-chat",
+    "the-interstellar-2",
+    "the-lock-talk-long-term",
+    "the-outlet-premium",
+    "the-shein-ambassador-program",
+    "the-trade-syndicate",
+    "thooth-pings",
+    "ticket-broker-u-pro",
+    "tonafba-wholesale-program",
+    "trade-bandit-elite",
+    "trade-copy-service-only",
+    "trader-capital-premium",
+    "traderade-premium-service",
+    "traders-roadmap-premium",
+    "trading-levels-algo-basic",
+    "trading-louis-live-stream",
+    "trend-fusion-algo-with-discord",
+    "umbrella-vip-picks",
+    "us30-indicator",
+    "velaris-trading-de",
+    "vinted-plug-abonnement-goat",
+    "vip-club-membership-tier",
+    "vip-money-millionaires",
+    "vito-commercis-free-community",
+    "volaris-learn-how-to-use-ai",
+    "wall-street-jd",
+    "waynes-pivots-pro",
+    "win-with-alex-discord-vip",
+    "wva-advanced-coaching-program",
+    "z1-capital-membership",
+    "zapify-amazon-oawholesale",
+    "zeddy-lockz-monthly-premium",
+    "zeiierman-all-inclusive",
+    "zth-player-accelerator"
+  ]
+}

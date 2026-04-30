@@ -1,0 +1,376 @@
+{
+  "generatedAt": "2025-12-16T12:32:02.691Z",
+  "count": 90,
+  "reasons": {
+    "too short (2 chars)": 1,
+    "single token (1)": 33,
+    "too short (7 chars)": 12,
+    "denylist": 11,
+    "leading/trailing hyphen": 19,
+    "all generic words": 10,
+    "too short (4 chars)": 1,
+    "too short (6 chars)": 3
+  },
+  "slugs": [
+    {
+      "slug": "dt",
+      "reason": "too short (2 chars)"
+    },
+    {
+      "slug": "virality",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "netbetz",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "subscription-with-card",
+      "reason": "denylist"
+    },
+    {
+      "slug": "academy",
+      "reason": "denylist"
+    },
+    {
+      "slug": "exclusive",
+      "reason": "denylist"
+    },
+    {
+      "slug": "monthly-premium-membership",
+      "reason": "denylist"
+    },
+    {
+      "slug": "vulture",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "membership-card-payments",
+      "reason": "denylist"
+    },
+    {
+      "slug": "elite-premium",
+      "reason": "denylist"
+    },
+    {
+      "slug": "blackwolftrading",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "novahittas",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "salvobets",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "vipweek",
+      "reason": "denylist"
+    },
+    {
+      "slug": "peakflow",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "xtyphoon",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "thefacelessformula",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "monthly-plan",
+      "reason": "denylist"
+    },
+    {
+      "slug": "gtg-vip",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "quantsignals",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "edge-pro-beliebt-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "ace-of-trades-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "skyline-deluxe-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "vip-access-package",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "jaypickzem",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "a-z-trading-guide-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "ad-plus",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "vip-monthly",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "pokefinder",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "cellzier",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "elite-vip-membership",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "thumbnail-academy-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "prestige",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "pro-membership",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "pick-pray-vip-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "storyradar",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "doctorate-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "basic-plan",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "premium-membership-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "seller-central-boys-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "labstrike",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "vegas-shark-premium-picks-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "premium-weekly-membership",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "framework",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "tipsonpips",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "ez-algo",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "timeline",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "influencer-university-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "prodigy",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "mysportpick",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "creator",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "heatpicks",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "otc-bot",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "viralcash",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "dealking",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "hero",
+      "reason": "too short (4 chars)"
+    },
+    {
+      "slug": "premium-plan",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "originationmodeling",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "premium-subscription",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "tcgtracker",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "elite-access-pro",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "premium-access-monthly",
+      "reason": "all generic words"
+    },
+    {
+      "slug": "cms-vip",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "cryptowzrd",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "member",
+      "reason": "too short (6 chars)"
+    },
+    {
+      "slug": "equifix",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "-elite-plan",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "-cometleads-tier-1-shuffled",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "-the-ofm-incubator-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "-basic-access",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "333picks",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "1",
+      "reason": "denylist"
+    },
+    {
+      "slug": "cryptopro",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "httpscercleppmfr",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "lite-pro-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "mambafitcoach",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "pariahbets",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "satorifnf",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "stridetrades",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "-silver-tier-fyndit",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "bigjoebets",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "hopium",
+      "reason": "too short (6 chars)"
+    },
+    {
+      "slug": "membership",
+      "reason": "single token (1)"
+    },
+    {
+      "slug": "tms-player-props-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "vip",
+      "reason": "denylist"
+    },
+    {
+      "slug": "access",
+      "reason": "too short (6 chars)"
+    },
+    {
+      "slug": "premium",
+      "reason": "denylist"
+    },
+    {
+      "slug": "tms-heavy-hitters-",
+      "reason": "leading/trailing hyphen"
+    },
+    {
+      "slug": "discord",
+      "reason": "too short (7 chars)"
+    },
+    {
+      "slug": "trading",
+      "reason": "too short (7 chars)"
+    }
+  ]
+}

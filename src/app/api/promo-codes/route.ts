@@ -1,0 +1,105 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export async function GET() {
+  try {
+    const promoCodes = await prisma.promoCode.findMany({
+      include: {
+        Deal: {
+          select: {
+            id: true,
+            name: true,
+            slug: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return NextResponse.json({
+      success: true,
+      promoCodes
+    });
+  } catch (error) {
+    console.error('Error fetching promo codes:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch promo codes' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const {
+      whopId,
+      code,
+      title,
+      description,
+      type,
+      value,
+      validFrom,
+      validUntil,
+      maxUses,
+      isActive = true
+    } = body;
+
+    // Validate required fields
+    if (!whopId || !title || !type || !value) {
+      return NextResponse.json(
+        { success: false, error: 'Missing required fields: whopId, title, type, value' },
+        { status: 400 }
+      );
+    }
+
+    // Verify whop exists
+    const whop = await prisma.deal.findUnique({
+      where: { id: whopId }
+    });
+
+    if (!whop) {
+      return NextResponse.json(
+        { success: false, error: 'Whop not found' },
+        { status: 404 }
+      );
+    }
+
+    // Create promo code
+    const promoCodeId = crypto.randomUUID();
+    const promoCode = await prisma.promoCode.create({
+      data: {
+        id: promoCodeId,
+        whopId,
+        code: code ? code.toLowerCase() : null, // DB constraint requires lowercase
+        title,
+        description: description || '',
+        type,
+        value,
+        updatedAt: new Date()
+      },
+      include: {
+        Deal: {
+          select: {
+            id: true,
+            name: true,
+            slug: true
+          }
+        }
+      }
+    });
+
+    return NextResponse.json({
+      success: true,
+      promoCode
+    });
+  } catch (error: any) {
+    console.error('Error creating promo code:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to create promo code', details: error?.message || String(error) },
+      { status: 500 }
+    );
+  }
+}

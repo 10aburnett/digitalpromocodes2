@@ -1,0 +1,2887 @@
+===============================================================================
+ALL BLOG-RELATED FILES FOR CHATGPT
+===============================================================================
+Copy this entire file and paste into ChatGPT for modification instructions.
+===============================================================================
+
+
+================================================================================
+FILE 1: src/app/(public)/blog/page.tsx (Blog Index Page)
+================================================================================
+
+// @ts-nocheck
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { getPublishedBlogPosts, type BlogListItem } from '@/lib/blog'
+import { siteOrigin } from '@/lib/site-origin'
+import { SITE_BRAND, SITE_AUTHOR } from '@/lib/brand'
+
+// TypeScript safety: allow optional fields without altering Prisma
+type BlogListItemWithDates = BlogListItem & {
+  updatedAt?: Date | null;
+  authorName?: string | null;
+  author?: { name?: string | null } | null;
+};
+
+// SSG + ISR configuration
+export const dynamic = 'force-static'
+export const revalidate = 3600 // 1 hour
+export const fetchCache = 'force-cache'
+export const runtime = 'nodejs' // Required for Prisma
+
+const currentYear = new Date().getFullYear()
+
+export const metadata: Metadata = {
+  title: `${SITE_BRAND} Blog - Latest Deals, Tips & Digital Product Insights ${currentYear}`,
+  description: `Discover the latest deals, digital product reviews, exclusive offers, and insider tips for ${currentYear}. Stay updated with the newest discounts and insights from the world of digital products and online communities.`,
+  keywords: `blog, deals ${currentYear}, digital products, online courses, communities, exclusive deals, discount tips, digital marketplace insights`,
+  alternates: {
+// PHASE1-DEINDEX:     canonical: `${siteOrigin()}/blog`
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    }
+  },
+  openGraph: {
+    title: `${SITE_BRAND} Blog - Latest Deals & Digital Product Insights ${currentYear}`,
+    description: `Your source for the latest deals, exclusive offers, and digital product insights for ${currentYear}. Get insider tips and discover new opportunities in the digital marketplace.`,
+    type: 'website',
+    url: `${siteOrigin()}/blog`
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_BRAND} Blog - Latest Deals & Digital Product Insights ${currentYear}`,
+    description: `Your source for the latest deals, exclusive offers, and digital product insights for ${currentYear}. Get insider tips and discover new opportunities in the digital marketplace.`
+  }
+}
+
+export default async function BlogPage() {
+  try {
+    const posts = await getPublishedBlogPosts();
+
+    if (!posts.length) {
+      return (
+        <div className="min-h-screen py-8 transition-theme" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
+          <div className="mx-auto w-[90%] md:w-[95%] max-w-[1200px]">
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="text-center">
+                <h1 className="text-4xl md:text-5xl font-bold py-1"
+                    style={{ lineHeight: '1.3', marginBottom: '0.6rem' }}>
+                  <span style={{ color: 'var(--accent-color)' }}>DPC</span>
+                  <span className="ml-2" style={{ color: 'var(--text-color)' }}>
+                    Blog
+                  </span>
+                </h1>
+                <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+              </div>
+
+              <div className="text-center -mt-2">
+                <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                  Stay updated with the latest insights, tips, and digital product news.
+                </p>
+              </div>
+
+              <div className="text-center py-16">
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <p className="text-lg text-gray-900 dark:text-white">No blog posts published yet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const origin = siteOrigin();
+
+    // Build JSON-LD CollectionPage schema for SEO
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: `${SITE_BRAND} Blog`,
+      description: `Latest posts and guides on deals and digital products in ${currentYear}.`,
+      url: `${origin}/blog`,
+      hasPart: (posts as BlogListItemWithDates[]).slice(0, 20).map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        datePublished: p.publishedAt?.toISOString?.() ?? undefined,
+        dateModified: (p.updatedAt ?? p.publishedAt)?.toISOString?.() ?? undefined,
+        url: `${origin}/blog/${p.slug}`,
+        author: {
+          '@type': 'Person',
+          name: (p as any).User?.name || (p as any).authorName || SITE_AUTHOR
+        }
+      })),
+    };
+
+    return (
+      <div className="min-h-screen py-8 transition-theme" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
+        {/* Server-rendered JSON-LD for blog collection */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+        <div className="mx-auto w-[90%] md:w-[95%] max-w-[1200px]">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold py-1"
+                  style={{ lineHeight: '1.3', marginBottom: '0.6rem' }}>
+                <span style={{ color: 'var(--accent-color)' }}>DPC</span>
+                <span className="ml-2" style={{ color: 'var(--text-color)' }}>
+                  Blog
+                </span>
+              </h1>
+              <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+            </div>
+
+            <div className="text-center -mt-2">
+              <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                Stay updated with the latest insights, tips, and digital product news.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {(posts as BlogListItemWithDates[]).map((post) => (
+                <Link key={post.id} href={`/blog/${post.slug}`}>
+                  <article
+                    className="blog-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border cursor-pointer relative"
+                    style={{
+                      borderColor: 'var(--card-border)',
+                      boxShadow: 'var(--promo-shadow)'
+                    }}
+                  >
+                    {post.pinned && (
+                      <div className="absolute top-4 right-4 text-yellow-500 text-xl">
+                        📌
+                      </div>
+                    )}
+                    <div className="blog-card-content p-8">
+                      <div className="flex flex-col h-full">
+                        <div className="mb-4">
+                          <time className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                            {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            }) : ''}
+                          </time>
+                        </div>
+
+                        <h2 className="blog-card-title text-2xl font-bold mb-4 group-hover:opacity-80 transition-colors" style={{ color: 'var(--text-color)' }}>
+                          {post.title}
+                        </h2>
+
+                        {post.excerpt && (
+                          <p className="blog-card-excerpt mb-6" style={{ color: 'var(--text-secondary)' }}>
+                            {post.excerpt}
+                          </p>
+                        )}
+
+                        <div className="flex items-center justify-between mt-auto">
+                          <span
+                            className="blog-accent inline-flex items-center font-medium group-hover:opacity-80 transition-opacity"
+                          >
+                            Read More
+                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </span>
+
+                          <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                            By {post.authorName ?? post.author?.name ?? 'Unknown'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  } catch (err) {
+    console.error('Blog page load failed:', err);
+    return (
+      <div className="min-h-screen py-8 transition-theme" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
+        <div className="mx-auto w-[90%] md:w-[95%] max-w-[1200px]">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold py-1"
+                  style={{ lineHeight: '1.3', marginBottom: '0.6rem' }}>
+                <span style={{ color: 'var(--accent-color)' }}>DPC</span>
+                <span className="ml-2" style={{ color: 'var(--text-color)' }}>
+                  Blog
+                </span>
+              </h1>
+              <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+            </div>
+
+            <div className="text-center -mt-2">
+              <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+                Stay updated with the latest insights, tips, and digital product news.
+              </p>
+            </div>
+
+            <div className="text-center py-16">
+              <div className="p-8 rounded-lg border" style={{
+                backgroundColor: 'var(--background-secondary)',
+                borderColor: 'var(--border-color)'
+              }}>
+                <div className="mb-4 text-6xl">⚠️</div>
+                <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+                  Unable to Load Blog Posts
+                </h2>
+                <p className="text-lg mb-6" style={{ color: 'var(--text-secondary)' }}>
+                  We&apos;re experiencing technical difficulties. Please try again in a few moments.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+
+================================================================================
+FILE 2: src/app/(public)/blog/[slug]/page.tsx (Individual Blog Post Page)
+================================================================================
+
+// @ts-nocheck
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import Script from 'next/script'
+import { prisma } from '@/lib/prisma'
+import { getBlogPostBySlug } from '@/lib/blog'
+import BlogPostClient from '@/components/BlogPostClient'
+import { generateArticleSchema, generateBreadcrumbSchema, calculateReadingTime, extractHeadings, processContentWithHeadingIds, optimizeInternalLinkingServer, optimizeImageAltText } from '@/lib/blog-utils'
+import { siteOrigin } from '@/lib/site-origin'
+import { SITE_BRAND, SITE_AUTHOR } from '@/lib/brand'
+
+// SSG + ISR configuration
+export const dynamic = 'force-static'
+export const revalidate = 3600 // 1 hour
+export const dynamicParams = true // Enable ISR for new posts
+export const fetchCache = 'force-cache'
+export const runtime = 'nodejs' // Required for Prisma
+
+interface BlogPostPageProps {
+  params: {
+    slug: string
+  }
+}
+
+interface BlogPost {
+  id: string
+  title: string
+  content: string
+  excerpt: string | null
+  publishedAt: string | null
+  updatedAt: string | null
+  slug: string
+  authorName: string | null
+  author: {
+    name: string
+  }
+}
+
+// Prebuild all published blog posts at build time
+export async function generateStaticParams() {
+  const posts = await prisma.blogPost.findMany({
+    where: { published: true },
+    select: { slug: true }
+  });
+
+  return posts.map(p => ({ slug: p.slug }));
+}
+
+// Generate metadata with canonical URL and proper robots tags
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  try {
+    const post = await prisma.blogPost.findUnique({
+      where: { slug: params.slug },
+      select: {
+        title: true,
+        excerpt: true,
+        published: true,
+        updatedAt: true,
+        publishedAt: true,
+        slug: true,
+        authorName: true,
+        User: { select: { name: true } }
+      }
+    });
+
+    if (!post || !post.published) {
+      return {
+        title: `Blog Post Not Found - ${SITE_BRAND}`,
+        description: 'The requested blog post could not be found.',
+        robots: { index: false, follow: true }
+      }
+    }
+
+    const canonical = `${siteOrigin()}/blog/${post.slug}`;
+    const currentYear = new Date().getFullYear();
+    const metaDescription = post.excerpt ?? undefined;
+    const publishedDate = post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined;
+
+    const authorName = post.User?.name || post.authorName || SITE_AUTHOR;
+
+    return {
+      title: `${post.title} - ${SITE_BRAND} Blog`,
+      description: metaDescription,
+      keywords: `${post.title}, blog, deals, digital products, ${authorName}`,
+      authors: [{ name: authorName }],
+      alternates: {
+        canonical
+      },
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        }
+      },
+      openGraph: {
+        title: `${post.title} - ${SITE_BRAND} Blog`,
+        description: metaDescription,
+        type: 'article',
+        url: canonical,
+        publishedTime: publishedDate,
+        authors: [authorName],
+        siteName: SITE_BRAND
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${post.title} - ${SITE_BRAND} Blog`,
+        description: metaDescription,
+      }
+    }
+  } catch (error) {
+    console.error('Error generating blog post metadata:', error)
+    return {
+      title: `Blog Post - ${SITE_BRAND}`,
+      description: 'Read the latest insights about deals and digital products.'
+    }
+  }
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  // Guard: Only serve published posts
+  const post = await prisma.blogPost.findUnique({
+    where: { slug: params.slug },
+    include: { User: { select: { name: true } } },
+  });
+
+  if (!post || !post.published) {
+    return notFound();
+  }
+
+  const authorName = post.User?.name || post.authorName || SITE_AUTHOR;
+
+  // Server-rendered BlogPosting schema (minimal, truthful)
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt ?? undefined,
+    datePublished: post.publishedAt?.toISOString?.(),
+    dateModified: post.updatedAt?.toISOString?.(),
+    mainEntityOfPage: `${siteOrigin()}/blog/${post.slug}`,
+    author: authorName
+      ? { '@type': 'Person', name: authorName }
+      : { '@type': 'Organization', name: SITE_BRAND },
+  };
+
+  // Breadcrumb schema
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteOrigin()
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${siteOrigin()}/blog`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `${siteOrigin()}/blog/${post.slug}`
+      }
+    ]
+  }
+
+  // Get all blog posts for internal linking optimization
+  const allPosts = await prisma.blogPost.findMany({
+    where: { published: true },
+    select: { id: true, title: true, slug: true }
+  })
+
+  // Process content with all optimizations
+  let optimizedContent = post.content
+
+  // 1. Optimize image alt text
+  optimizedContent = optimizeImageAltText(optimizedContent, post.title)
+
+  // 2. Add internal links to other blog posts
+  optimizedContent = await optimizeInternalLinkingServer(optimizedContent, post.id, allPosts)
+
+  // 3. Add IDs to headings for table of contents
+  optimizedContent = processContentWithHeadingIds(optimizedContent)
+
+  const processedPost = {
+    ...post,
+    content: optimizedContent,
+    readingTime: calculateReadingTime(post.content),
+    headings: extractHeadings(optimizedContent)
+  }
+
+  return (
+    <>
+      {/* Server-rendered Article Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
+
+      {/* Server-rendered Breadcrumb Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+
+      {/* Pass the processed post data to the client component */}
+      <BlogPostClient post={processedPost} />
+    </>
+  )
+}
+
+
+================================================================================
+FILE 3: src/app/(public)/blog/error.tsx (Blog Error Page)
+================================================================================
+
+'use client';
+
+import { useEffect } from 'react';
+import ErrorState from '@/components/layout/ErrorState';
+
+export default function BlogError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    console.error('Blog page error:', error);
+  }, [error]);
+
+  return (
+    <ErrorState
+      variant="error"
+      title="Blog temporarily unavailable"
+      description="We're experiencing technical difficulties with the blog. Our team has been notified and is working on a fix."
+      onRetry={reset}
+      secondaryCta={{ href: '/', label: 'Back to homepage' }}
+    />
+  );
+}
+
+
+================================================================================
+FILE 4: src/app/(public)/blog/[slug]/not-found.tsx (Blog Post Not Found)
+================================================================================
+
+import ErrorState from '@/components/layout/ErrorState';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog post not found | DigitalPromoCodes',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default function BlogPostNotFound() {
+  return (
+    <ErrorState
+      variant="not-found"
+      title="Blog post not found"
+      description="We couldn't find this article on DigitalPromoCodes. It may have been removed, renamed, or the link may be incorrect."
+      primaryCta={{ href: '/blog', label: 'Browse all articles' }}
+      secondaryCta={{ href: '/', label: 'Back to homepage' }}
+    />
+  );
+}
+
+
+================================================================================
+FILE 5: src/components/BlogPostClient.tsx (Blog Post Client Component)
+================================================================================
+
+'use client'
+import { useState } from 'react'
+import Link from 'next/link'
+import CommentForm from '@/components/CommentForm'
+import CommentsList from '@/components/CommentsList'
+import RelatedPosts from '@/components/RelatedPosts'
+
+interface BlogPost {
+  id: string
+  title: string
+  content: string
+  excerpt: string | null
+  publishedAt: string | null
+  slug: string
+  readingTime: number
+  headings: Array<{
+    id: string
+    text: string
+    level: number
+  }>
+  authorName?: string | null
+  author?: {
+    name: string
+  }
+}
+
+interface BlogPostClientProps {
+  post: BlogPost
+}
+
+export default function BlogPostClient({ post }: BlogPostClientProps) {
+  const [refreshComments, setRefreshComments] = useState(0)
+  const [replyTo, setReplyTo] = useState<{ parentId: string, parentAuthor: string } | null>(null)
+  const [showToc, setShowToc] = useState(false)
+
+  // Show table of contents for posts with 3+ headings
+  const shouldShowToc = post.headings && post.headings.length >= 3
+
+  const handleCommentSubmitted = () => {
+    setRefreshComments(prev => prev + 1)
+    setReplyTo(null) // Clear reply state after submission
+  }
+
+  const handleReply = (parentId: string, parentAuthor: string) => {
+    setReplyTo({ parentId, parentAuthor })
+    // Scroll to comment form
+    setTimeout(() => {
+      document.querySelector('[data-comment-form]')?.scrollIntoView({ behavior: 'smooth' })
+    }, 100)
+  }
+
+  const handleCancelReply = () => {
+    setReplyTo(null)
+  }
+
+  return (
+    <div className="min-h-screen py-12 transition-theme" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
+      <div className="mx-auto w-[90%] md:w-[95%] max-w-[800px]">
+        <div className="space-y-8">
+          {/* Breadcrumb Navigation */}
+          <nav className="mb-8" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <li>
+                <Link href="/" className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-color)' }}>
+                  Home
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                <Link href="/blog" className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-color)' }}>
+                  Blog
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="truncate max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                  {post.title}
+                </span>
+              </li>
+            </ol>
+          </nav>
+
+          {/* Article */}
+          <article>
+            <header className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r bg-clip-text text-transparent py-2"
+                  style={{ backgroundImage: `linear-gradient(to right, var(--text-color), var(--text-secondary))`, lineHeight: '1.3' }}>
+                {post.title}
+              </h1>
+              <div className="w-20 h-1 mx-auto rounded-full mb-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+
+              <div className="flex items-center justify-center space-x-6" style={{ color: 'var(--text-secondary)' }}>
+                {post.publishedAt && (
+                  <time>
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                )}
+
+                {(post.authorName || post.author?.name) && (
+                  <span>By {post.authorName || post.author?.name}</span>
+                )}
+
+                <span className="flex items-center">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {post.readingTime} min read
+                </span>
+              </div>
+            </header>
+
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Table of Contents - Desktop Sidebar */}
+              {shouldShowToc && (
+                <div className="hidden lg:block lg:w-64 shrink-0">
+                  <div className="sticky top-8">
+                    <div className="rounded-lg p-6 border" style={{
+                      backgroundColor: 'var(--background-secondary)',
+                      borderColor: 'var(--border-color)'
+                    }}>
+                      <h3 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-color)' }}>
+                        Table of Contents
+                      </h3>
+                      <nav className="space-y-2">
+                        {post.headings.map((heading, index) => (
+                          <a
+                            key={index}
+                            href={`#${heading.id}`}
+                            className="block text-sm hover:opacity-80 transition-opacity"
+                            style={{
+                              color: 'var(--text-secondary)',
+                              paddingLeft: `${(heading.level - 1) * 12}px`
+                            }}
+                          >
+                            {heading.text}
+                          </a>
+                        ))}
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Table of Contents Toggle */}
+              {shouldShowToc && (
+                <div className="lg:hidden mb-6">
+                  <button
+                    onClick={() => setShowToc(!showToc)}
+                    className="w-full flex items-center justify-between p-4 rounded-lg border"
+                    style={{
+                      backgroundColor: 'var(--background-secondary)',
+                      borderColor: 'var(--border-color)',
+                      color: 'var(--text-color)'
+                    }}
+                  >
+                    <span className="font-medium">Table of Contents</span>
+                    <svg
+                      className={`w-5 h-5 transition-transform ${showToc ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {showToc && (
+                    <div className="mt-4 p-4 rounded-lg border" style={{
+                      backgroundColor: 'var(--background-secondary)',
+                      borderColor: 'var(--border-color)'
+                    }}>
+                      <nav className="space-y-2">
+                        {post.headings.map((heading, index) => (
+                          <a
+                            key={index}
+                            href={`#${heading.id}`}
+                            onClick={() => setShowToc(false)}
+                            className="block text-sm hover:opacity-80 transition-opacity"
+                            style={{
+                              color: 'var(--text-secondary)',
+                              paddingLeft: `${(heading.level - 1) * 12}px`
+                            }}
+                          >
+                            {heading.text}
+                          </a>
+                        ))}
+                      </nav>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Main Content */}
+              <div className="flex-1">
+                <div className="rounded-2xl shadow-lg p-8 md:p-12 border"
+                     style={{
+                       backgroundColor: 'var(--card-bg)',
+                       borderColor: 'var(--card-border)',
+                       boxShadow: 'var(--promo-shadow)'
+                     }}>
+                  <div
+                    className="prose prose-lg max-w-none blog-content"
+                    style={{
+                      color: 'var(--text-color)',
+                      '--tw-prose-headings': 'var(--text-color)',
+                      '--tw-prose-links': 'var(--accent-color)',
+                    } as React.CSSProperties}
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  />
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Related Posts Section */}
+          <div className="mt-12">
+            <RelatedPosts
+              currentPostId={post.id}
+              currentPostTitle={post.title}
+            />
+          </div>
+
+          {/* Comments Section */}
+          <div className="mt-12 space-y-8">
+            <CommentsList
+              blogPostId={post.id}
+              refreshTrigger={refreshComments}
+              onReply={handleReply}
+            />
+            <div data-comment-form>
+              <CommentForm
+                blogPostId={post.id}
+                onCommentSubmitted={handleCommentSubmitted}
+                parentId={replyTo?.parentId}
+                parentAuthor={replyTo?.parentAuthor}
+                onCancel={replyTo ? handleCancelReply : undefined}
+              />
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="mt-12 pt-8 border-t" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="text-center">
+              <Link
+                href="/blog"
+                className="inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg hover:opacity-80 transition-opacity"
+                style={{
+                  backgroundColor: 'var(--accent-color)',
+                  color: 'white'
+                }}
+              >
+                View All Posts
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+================================================================================
+FILE 6: src/components/RelatedPosts.tsx (Related Posts Component)
+================================================================================
+
+'use client'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+
+interface RelatedPost {
+  id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  publishedAt: string | null
+  authorName?: string | null
+}
+
+interface RelatedPostsProps {
+  currentPostId: string
+  currentPostTitle: string
+}
+
+export default function RelatedPosts({ currentPostId, currentPostTitle }: RelatedPostsProps) {
+  const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchRelatedPosts = async () => {
+      try {
+        const response = await fetch(`/api/blog/related?postId=${currentPostId}&title=${encodeURIComponent(currentPostTitle)}`)
+        if (response.ok) {
+          const data = await response.json()
+          setRelatedPosts(data.posts || [])
+        }
+      } catch (error) {
+        console.error('Error fetching related posts:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRelatedPosts()
+  }, [currentPostId, currentPostTitle])
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold" style={{ color: 'var(--text-color)' }}>
+          Related Articles
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="animate-pulse">
+              <div className="rounded-lg p-6 border" style={{
+                backgroundColor: 'var(--background-secondary)',
+                borderColor: 'var(--border-color)'
+              }}>
+                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded mb-4"></div>
+                <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded mb-2"></div>
+                <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-3/4"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (relatedPosts.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="space-y-6">
+      <h3 className="text-2xl font-bold" style={{ color: 'var(--text-color)' }}>
+        Related Articles
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {relatedPosts.map((post) => (
+          <Link key={post.id} href={`/blog/${post.slug}`}>
+            <article
+              className="group rounded-lg p-6 border hover:shadow-lg transition-all duration-300 cursor-pointer h-full flex flex-col"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--card-border)',
+                boxShadow: 'var(--promo-shadow)'
+              }}
+            >
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold mb-3 group-hover:opacity-80 transition-opacity line-clamp-2"
+                    style={{ color: 'var(--text-color)' }}>
+                  {post.title}
+                </h4>
+
+                {post.excerpt && (
+                  <p className="text-sm mb-4 line-clamp-3" style={{ color: 'var(--text-secondary)' }}>
+                    {post.excerpt}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center justify-between mt-auto pt-4 border-t"
+                   style={{ borderColor: 'var(--border-color)' }}>
+                {post.publishedAt && (
+                  <time className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </time>
+                )}
+
+                {post.authorName && (
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    By {post.authorName}
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-3">
+                <span
+                  className="inline-flex items-center text-sm font-medium group-hover:opacity-80 transition-opacity"
+                  style={{ color: 'var(--accent-color)' }}
+                >
+                  Read More
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+
+================================================================================
+FILE 7: src/components/CommentForm.tsx (Comment Form Component)
+================================================================================
+
+'use client'
+import { useState, useEffect } from 'react'
+import MailingListPopup from './MailingListPopup'
+
+interface CommentFormProps {
+  blogPostId: string
+  onCommentSubmitted: () => void
+  parentId?: string
+  parentAuthor?: string
+  onCancel?: () => void
+}
+
+export default function CommentForm({ blogPostId, onCommentSubmitted, parentId, parentAuthor, onCancel }: CommentFormProps) {
+  const [formData, setFormData] = useState({
+    authorName: '',
+    authorEmail: '',
+    content: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [showMailingListPopup, setShowMailingListPopup] = useState(false)
+
+  // Auto-fill with @username when replying
+  useEffect(() => {
+    if (parentId && parentAuthor) {
+      setFormData(prev => ({
+        ...prev,
+        content: `@${parentAuthor} `
+      }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        content: ''
+      }))
+    }
+  }, [parentId, parentAuthor])
+
+  const checkEmailSubscription = async (email: string): Promise<boolean> => {
+    try {
+      const response = await fetch('/api/mailing-list/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        return data.isSubscribed || false
+      }
+      return false
+    } catch (error) {
+      console.error('Error checking email subscription:', error)
+      return false // If check fails, show popup to be safe
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setMessage(null)
+
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          blogPostId,
+          parentId: parentId || null
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: data.message })
+        onCommentSubmitted()
+
+        // Check if user is already subscribed before showing popup (for both comments and replies)
+        const isAlreadySubscribed = await checkEmailSubscription(formData.authorEmail)
+
+        if (!isAlreadySubscribed) {
+          // Show mailing list popup if user is not already subscribed
+          console.log('User not subscribed, showing mailing list popup')
+          setTimeout(() => {
+            setShowMailingListPopup(true)
+          }, 1500) // Small delay to let user see success message
+        } else {
+          console.log('User already subscribed, skipping mailing list popup')
+        }
+
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Failed to submit comment' })
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to submit comment. Please try again.' })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const resetFormData = () => {
+    setFormData({
+      authorName: '',
+      authorEmail: '',
+      content: parentId && parentAuthor ? `@${parentAuthor} ` : ''
+    })
+  }
+
+  const handleMailingListClose = () => {
+    setShowMailingListPopup(false)
+    // Clear form data after mailing list interaction
+    resetFormData()
+  }
+
+  const handleMailingListSubmit = (subscribed: boolean) => {
+    // Popup component handles the API call, we just need to cleanup
+    setShowMailingListPopup(false)
+    resetFormData()
+  }
+
+  return (
+    <div className="rounded-2xl shadow-lg p-8 border"
+         style={{
+           backgroundColor: 'var(--card-bg)',
+           borderColor: 'var(--card-border)',
+           boxShadow: 'var(--promo-shadow)'
+         }}>
+      <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-color)' }}>
+        {parentId ? `Reply to ${parentAuthor}` : 'Leave a Comment'}
+      </h3>
+
+      {parentId && onCancel && (
+        <div className="mb-4">
+          <button
+            onClick={onCancel}
+            className="text-sm px-4 py-2 rounded border transition-colors"
+            style={{
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-muted)',
+              backgroundColor: 'var(--background-color)'
+            }}
+          >
+            Cancel Reply
+          </button>
+        </div>
+      )}
+
+      {message && (
+        <div
+          className="p-4 rounded-lg mb-6"
+          style={message.type === 'success' ? {
+            backgroundColor: 'var(--accent-color)',
+            color: 'white'
+          } : {
+            backgroundColor: 'light-dark(#fef2f2, rgba(220, 38, 38, 0.1))',
+            color: 'light-dark(#dc2626, #fca5a5)',
+            borderColor: 'light-dark(#fecaca, rgba(220, 38, 38, 0.3))'
+          }}
+        >
+          {message.text}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              Name *
+            </label>
+            <input
+              type="text"
+              value={formData.authorName}
+              onChange={(e) => setFormData(prev => ({ ...prev, authorName: e.target.value }))}
+              className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{
+                backgroundColor: 'var(--background-color)',
+                borderColor: 'var(--card-border)',
+                color: 'var(--text-color)'
+              }}
+              required
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              Email *
+            </label>
+            <input
+              type="email"
+              value={formData.authorEmail}
+              onChange={(e) => setFormData(prev => ({ ...prev, authorEmail: e.target.value }))}
+              className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{
+                backgroundColor: 'var(--background-color)',
+                borderColor: 'var(--card-border)',
+                color: 'var(--text-color)'
+              }}
+              required
+              disabled={isSubmitting}
+            />
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+              Your email will not be published
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+            Comment *
+          </label>
+          <textarea
+            value={formData.content}
+            onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+            rows={5}
+            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical"
+            style={{
+              backgroundColor: 'var(--background-color)',
+              borderColor: 'var(--card-border)',
+              color: 'var(--text-color)'
+            }}
+            placeholder={parentId ? `Reply to ${parentAuthor}...` : "Share your thoughts..."}
+            required
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="px-8 py-3 rounded-lg font-medium transition-colors disabled:opacity-50"
+            style={{
+              backgroundColor: 'var(--accent-color)',
+              color: 'white'
+            }}
+          >
+            {isSubmitting ? 'Submitting...' : (parentId ? 'Post Reply' : 'Post Comment')}
+          </button>
+        </div>
+      </form>
+
+      {/* Mailing List Popup - for both comments and replies */}
+      <MailingListPopup
+        isOpen={showMailingListPopup}
+        onClose={handleMailingListClose}
+        userEmail={formData.authorEmail}
+        userName={formData.authorName}
+        onSubmit={handleMailingListSubmit}
+      />
+    </div>
+  )
+}
+
+
+================================================================================
+FILE 8: src/components/CommentsList.tsx (Comments List Component)
+================================================================================
+
+'use client'
+import { useState, useEffect } from 'react'
+
+interface Comment {
+  id: string
+  content: string
+  authorName: string
+  createdAt: string
+  upvotes: number
+  downvotes: number
+  userVote: 'UPVOTE' | 'DOWNVOTE' | null
+  replies: Comment[]
+}
+
+interface CommentsListProps {
+  blogPostId: string
+  refreshTrigger: number
+  onReply?: (parentId: string, parentAuthor: string) => void
+}
+
+export default function CommentsList({ blogPostId, refreshTrigger, onReply }: CommentsListProps) {
+  const [comments, setComments] = useState<Comment[]>([])
+  const [loading, setLoading] = useState(true)
+  const [votingStates, setVotingStates] = useState<Record<string, boolean>>({})
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`/api/comments?blogPostId=${blogPostId}`)
+      if (response.ok) {
+        const data = await response.json()
+        setComments(Array.isArray(data) ? data : [])
+      } else {
+        setComments([])
+      }
+    } catch (error) {
+      console.error('Error fetching comments:', error)
+      setComments([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchComments()
+  }, [blogPostId, refreshTrigger])
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  const handleVote = async (commentId: string, voteType: 'UPVOTE' | 'DOWNVOTE') => {
+    if (votingStates[commentId]) return // Prevent double-clicking
+
+    setVotingStates(prev => ({ ...prev, [commentId]: true }))
+
+    try {
+      const response = await fetch(`/api/comments/${commentId}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ voteType })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+
+        // Update the comment in state with new vote counts and user vote
+        setComments(prevComments =>
+          updateCommentVotes(prevComments, commentId, {
+            upvotes: data.upvotes,
+            downvotes: data.downvotes,
+            userVote: data.userVote
+          })
+        )
+      }
+    } catch (error) {
+      console.error('Error voting on comment:', error)
+    } finally {
+      setVotingStates(prev => ({ ...prev, [commentId]: false }))
+    }
+  }
+
+  // Helper function to recursively update vote counts in nested comments
+  const updateCommentVotes = (comments: Comment[], targetId: string, voteData: { upvotes: number, downvotes: number, userVote: 'UPVOTE' | 'DOWNVOTE' | null }): Comment[] => {
+    return comments.map(comment => {
+      if (comment.id === targetId) {
+        return {
+          ...comment,
+          upvotes: voteData.upvotes,
+          downvotes: voteData.downvotes,
+          userVote: voteData.userVote
+        }
+      }
+      if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: updateCommentVotes(comment.replies, targetId, voteData)
+        }
+      }
+      return comment
+    })
+  }
+
+  const renderComment = (comment: Comment, depth = 0) => {
+    const netScore = comment.upvotes - comment.downvotes
+    const isVoting = votingStates[comment.id]
+    const maxNestingDepth = 5
+
+    // For comments deeper than max nesting, render them flattened with straight lines
+    if (depth > maxNestingDepth) {
+      return (
+        <div key={comment.id} className="mt-4 relative">
+          {/* Straight vertical line for flattened deep comments */}
+          <div
+            className="absolute left-0 top-0 w-0.5 h-full"
+            style={{
+              backgroundColor: 'var(--thread-line-color, #b3cdfc)',
+              marginLeft: '12px'
+            }}
+          ></div>
+
+          <div
+            className="ml-6 border rounded-lg p-4"
+            style={{
+              borderColor: 'var(--card-border)',
+              backgroundColor: 'var(--card-bg)',
+              borderLeftWidth: '2px',
+              borderLeftColor: 'var(--thread-line-color, #b3cdfc)'
+            }}
+          >
+            {renderCommentContent(comment)}
+          </div>
+
+          {/* Render deeply nested replies also flattened */}
+          {comment.replies && comment.replies.length > 0 && (
+            <div className="mt-2">
+              {comment.replies.map(reply => renderComment(reply, depth + 1))}
+            </div>
+          )}
+        </div>
+      )
+    }
+
+    // Normal nested rendering for levels 1-5
+    return (
+      <div key={comment.id} className={`${depth > 0 ? 'ml-8 mt-4' : ''} relative`}>
+        {/* Reddit-style curved threading line for nested comments */}
+        {depth > 0 && (
+          <div className="absolute left-0 top-0 opacity-40">
+            {/* Curved connector from parent */}
+            <div
+              className="w-4 h-6"
+              style={{
+                borderLeft: `2px solid var(--accent-color)`,
+                borderBottom: `2px solid var(--accent-color)`,
+                borderBottomLeftRadius: '8px',
+                marginLeft: '-32px'
+              }}
+            ></div>
+            {/* Vertical line for child replies */}
+            {comment.replies && comment.replies.length > 0 && (
+              <div
+                className="w-0.5 opacity-30"
+                style={{
+                  backgroundColor: 'var(--accent-color)',
+                  height: 'calc(100% - 24px)',
+                  marginLeft: '-32px',
+                  marginTop: '0px'
+                }}
+              ></div>
+            )}
+          </div>
+        )}
+
+        <div
+          className="border rounded-lg p-4 relative"
+          style={{
+            borderColor: 'var(--card-border)',
+            backgroundColor: depth > 0 ? 'var(--card-bg)' : 'var(--background-color)'
+          }}
+        >
+          {renderCommentContent(comment)}
+        </div>
+
+        {/* Nested replies */}
+        {comment.replies && comment.replies.length > 0 && (
+          <div className="mt-2">
+            {comment.replies.map(reply => renderComment(reply, depth + 1))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Extract comment content rendering to avoid duplication
+  const renderCommentContent = (comment: Comment) => {
+    const netScore = comment.upvotes - comment.downvotes
+    const isVoting = votingStates[comment.id]
+
+    return (
+          <div className="flex items-start space-x-3">
+            {/* Vote buttons */}
+            <div className="flex flex-col items-center space-y-1 pt-1">
+              <button
+                onClick={() => handleVote(comment.id, 'UPVOTE')}
+                disabled={isVoting}
+                className={`p-1 rounded transition-colors ${
+                  comment.userVote === 'UPVOTE'
+                    ? 'text-green-500'
+                    : 'text-gray-400 hover:text-green-500'
+                } ${isVoting ? 'opacity-50' : ''}`}
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              <span
+                className={`text-sm font-medium ${
+                  netScore > 0 ? 'text-green-500' :
+                  netScore < 0 ? 'text-red-500' :
+                  'text-gray-500'
+                }`}
+              >
+                {netScore}
+              </span>
+
+              <button
+                onClick={() => handleVote(comment.id, 'DOWNVOTE')}
+                disabled={isVoting}
+                className={`p-1 rounded transition-colors ${
+                  comment.userVote === 'DOWNVOTE'
+                    ? 'text-red-500'
+                    : 'text-gray-400 hover:text-red-500'
+                } ${isVoting ? 'opacity-50' : ''}`}
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="flex-1">
+              {/* Comment header */}
+              <div className="flex items-center space-x-2 mb-2">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm"
+                  style={{ backgroundColor: 'var(--accent-color)' }}
+                >
+                  {comment.authorName.charAt(0).toUpperCase()}
+                </div>
+                <span className="font-medium" style={{ color: 'var(--text-color)' }}>
+                  {comment.authorName}
+                </span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  {formatDate(comment.createdAt)}
+                </span>
+              </div>
+
+              {/* Comment content */}
+              <p
+                className="whitespace-pre-wrap leading-relaxed mb-3"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                {comment.content}
+              </p>
+
+              {/* Reply button */}
+              {onReply && (
+                <button
+                  onClick={() => onReply(comment.id, comment.authorName)}
+                  className="text-sm font-medium transition-colors hover:opacity-80"
+                  style={{ color: 'var(--text-muted)' }}
+                  onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = 'var(--accent-color)'}
+                  onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'}
+                >
+                  Reply
+                </button>
+              )}
+            </div>
+          </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl shadow-lg p-8 border"
+           style={{
+             backgroundColor: 'var(--card-bg)',
+             borderColor: 'var(--card-border)',
+             boxShadow: 'var(--promo-shadow)'
+           }}>
+        <div className="animate-pulse">
+          <div className="h-6 w-32 rounded mb-4" style={{ backgroundColor: 'var(--text-muted)' }}></div>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-2">
+                <div className="h-4 w-24 rounded" style={{ backgroundColor: 'var(--text-muted)' }}></div>
+                <div className="h-16 w-full rounded" style={{ backgroundColor: 'var(--text-muted)' }}></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="rounded-2xl shadow-lg p-8 border"
+         style={{
+           backgroundColor: 'var(--card-bg)',
+           borderColor: 'var(--card-border)',
+           boxShadow: 'var(--promo-shadow)'
+         }}>
+      <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-color)' }}>
+        Comments ({comments?.length || 0})
+      </h3>
+
+      {!comments || comments.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+            No comments yet. Be the first to share your thoughts!
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {comments.map(comment => comment ? renderComment(comment) : null).filter(Boolean)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+
+================================================================================
+FILE 9: src/components/MailingListPopup.tsx (Mailing List Popup Component)
+================================================================================
+
+'use client'
+import { useState, useEffect } from 'react'
+
+interface MailingListPopupProps {
+  isOpen: boolean
+  onClose: () => void
+  userEmail: string
+  userName: string
+  onSubmit: (subscribed: boolean) => void
+}
+
+export default function MailingListPopup({
+  isOpen,
+  onClose,
+  userEmail,
+  userName,
+  onSubmit
+}: MailingListPopupProps) {
+  const [isSubscribed, setIsSubscribed] = useState(true) // Default to checked
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+
+  // Reset state when popup opens
+  useEffect(() => {
+    if (isOpen) {
+      setIsSubscribed(true)
+      setIsSubmitting(false)
+      setShowSuccess(false)
+    }
+  }, [isOpen])
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true)
+
+    try {
+      if (isSubscribed) {
+        // Subscribe user to mailing list
+        const response = await fetch('/api/mailing-list/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: userEmail,
+            name: userName,
+            source: 'blog_comment'
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to subscribe to mailing list')
+        }
+      }
+
+      // Show success message if subscribed
+      if (isSubscribed) {
+        console.log('Subscription successful, showing success message')
+        setIsSubmitting(false)
+        setShowSuccess(true)
+        // Auto-close after showing success message
+        setTimeout(() => {
+          onSubmit(isSubscribed)
+          onClose()
+        }, 20000)
+      } else {
+        setIsSubmitting(false)
+        onSubmit(isSubscribed)
+        onClose()
+      }
+    } catch (error) {
+      console.error('Error handling mailing list subscription:', error)
+      setIsSubmitting(false)
+      // Still proceed to close popup even if subscription fails
+      onSubmit(false)
+      onClose()
+    }
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div
+        className="relative w-full max-w-md mx-4 rounded-2xl shadow-2xl border p-8"
+        style={{
+          backgroundColor: 'var(--card-bg)',
+          borderColor: 'var(--card-border)',
+          boxShadow: 'var(--promo-shadow)'
+        }}
+      >
+        {showSuccess ? (
+          /* Success Message */
+          <div className="text-center">
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                onSubmit(isSubscribed)
+                onClose()
+              }}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div
+              className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: 'var(--accent-color)' }}
+            >
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+              Welcome to the VIP List! 🎉
+            </h3>
+
+            <div className="space-y-3 mb-6">
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                <strong style={{ color: 'var(--accent-color)' }}>You're all set!</strong> We've added <strong>{userEmail}</strong> to our exclusive mailing list.
+              </p>
+
+              <div
+                className="p-4 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--card-bg)',
+                  borderColor: 'var(--accent-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                <p className="text-sm">
+                  🎯 <strong>What's next?</strong> Watch your inbox for the latest Whop promo codes, insider tips, and exclusive deals.
+                  Your first VIP email is coming soon!
+                </p>
+              </div>
+            </div>
+
+            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Closing automatically in 20 seconds...
+            </div>
+          </div>
+        ) : (
+          <>
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+               style={{ backgroundColor: 'var(--accent-color)' }}>
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+
+          <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-color)' }}>
+            Join Our VIP List! 🎉
+          </h3>
+
+          <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Get exclusive access to the <strong style={{ color: 'var(--accent-color)' }}>newest Whop promo codes</strong>,
+            insider tips, and deals before anyone else! Join thousands of savvy shoppers saving big.
+          </p>
+        </div>
+
+        {/* Benefits */}
+        <div className="mb-6 space-y-3">
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 w-5 h-5 mt-1">
+              <svg className="w-5 h-5" style={{ color: 'var(--accent-color)' }} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span style={{ color: 'var(--text-secondary)' }}>
+              <strong>Exclusive promo codes</strong> not available anywhere else
+            </span>
+          </div>
+
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 w-5 h-5 mt-1">
+              <svg className="w-5 h-5" style={{ color: 'var(--accent-color)' }} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span style={{ color: 'var(--text-secondary)' }}>
+              <strong>Weekly insider tips</strong> on the best Whop deals
+            </span>
+          </div>
+
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 w-5 h-5 mt-1">
+              <svg className="w-5 h-5" style={{ color: 'var(--accent-color)' }} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span style={{ color: 'var(--text-secondary)' }}>
+              <strong>Early access</strong> to limited-time offers
+            </span>
+          </div>
+        </div>
+
+        {/* Subscription Checkbox */}
+        <div className="mb-6">
+          <label className="flex items-start space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isSubscribed}
+              onChange={(e) => setIsSubscribed(e.target.checked)}
+              className="w-5 h-5 mt-1 rounded focus:ring-2 focus:ring-offset-2"
+              style={{
+                accentColor: 'var(--accent-color)',
+                backgroundColor: 'var(--background-color)',
+                borderColor: 'var(--border-color)'
+              }}
+            />
+            <span style={{ color: 'var(--text-secondary)' }}>
+              Yes, I want to receive exclusive Whop promo codes and insider tips!
+              <span className="text-xs block mt-1" style={{ color: 'var(--text-muted)' }}>
+                (Unsubscribe anytime. We respect your privacy.)
+              </span>
+            </span>
+          </label>
+        </div>
+
+        {/* Action Button */}
+        <div className="flex justify-center">
+          <button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="w-full px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-90 disabled:opacity-50"
+            style={{
+              backgroundColor: 'var(--accent-color)',
+              color: 'white'
+            }}
+          >
+            {isSubmitting ? 'Processing...' : 'Continue'}
+          </button>
+        </div>
+        </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+
+================================================================================
+FILE 10: src/lib/blog.ts (Blog Data Functions)
+================================================================================
+
+// src/lib/blog.ts
+import { prisma } from '@/lib/prisma';
+
+export type BlogListItem = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  publishedAt: Date | null;
+  pinned: boolean;
+  author: { name: string }; // normalized shape the UI expects
+};
+
+export type BlogPostFull = BlogListItem & {
+  content: string | null;
+  updatedAt: Date | null;
+  readingTime?: number;
+  headings?: any[];
+};
+
+export type AdminPost = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  published: boolean;
+  pinned: boolean;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  author: { id: string | null; name: string };
+};
+
+export async function getPublishedBlogPosts(): Promise<BlogListItem[]> {
+  const posts = await prisma.blogPost.findMany({
+    where: { published: true },
+    orderBy: [{ pinned: 'desc' }, { publishedAt: 'desc' }],
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      excerpt: true,
+      publishedAt: true,
+      pinned: true,
+      authorName: true,                 // scalar fallback
+      User: { select: { name: true } }, // use actual relation field, not "author"
+    },
+  });
+
+  // Normalize to { author: { name } } for UI compatibility
+  return posts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    slug: p.slug,
+    excerpt: p.excerpt ?? null,
+    publishedAt: p.publishedAt ?? null,
+    pinned: p.pinned ?? false,
+    author: {
+      // prefer scalar authorName; fall back to relation name; then to "Unknown"
+      name: (p.authorName ?? p.User?.name ?? 'Unknown').trim(),
+    },
+  }));
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPostFull | null> {
+  const post = await prisma.blogPost.findFirst({
+    where: {
+      slug: slug,
+      published: true
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      excerpt: true,
+      publishedAt: true,
+      updatedAt: true,
+      slug: true,
+      pinned: true,
+      authorName: true,
+      User: { select: { name: true } }, // use actual relation field, not "author"
+    },
+  });
+
+  if (!post) return null;
+
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt ?? null,
+    publishedAt: post.publishedAt ?? null,
+    updatedAt: post.updatedAt ?? null,
+    pinned: post.pinned ?? false,
+    content: post.content ?? null,
+    author: {
+      // prefer scalar authorName; fall back to relation name; then to "Unknown"
+      name: (post.authorName ?? post.User?.name ?? 'Unknown').trim(),
+    },
+  };
+}
+
+function normalize(p: any): AdminPost {
+  return {
+    id: p.id,
+    title: p.title,
+    slug: p.slug,
+    excerpt: p.excerpt ?? null,
+    published: !!p.published,
+    pinned: !!p.pinned,
+    publishedAt: p.publishedAt ? p.publishedAt.toISOString() : null,
+    createdAt: p.createdAt.toISOString(),
+    updatedAt: p.updatedAt.toISOString(),
+    // prefer scalar authorName; fall back to relation User name
+    author: { id: p.authorId ?? null, name: (p.authorName ?? p.User?.name ?? "Admin").trim() },
+  };
+}
+
+/** Return ALL posts for admin (drafts + published). No filters by default. */
+export async function getAdminBlogPosts(opts?: { page?: number; limit?: number }) {
+  const page = Math.max(1, opts?.page ?? 1);
+  const limit = Math.min(100, Math.max(1, opts?.limit ?? 50));
+
+  const [total, rows] = await prisma.$transaction([
+    prisma.blogPost.count(),
+    prisma.blogPost.findMany({
+      orderBy: [{ pinned: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
+      skip: (page - 1) * limit,
+      take: limit,
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        published: true,
+        pinned: true,
+        publishedAt: true,
+        createdAt: true,
+        updatedAt: true,
+        authorId: true,
+        authorName: true,
+        User: { select: { id: true, name: true } }, // relation is User
+      },
+    }),
+  ]);
+
+  const items = rows.map(normalize);
+  return { ok: true as const, page, limit, total, items };
+}
+
+
+================================================================================
+FILE 11: src/lib/blog-utils.ts (Blog SEO Utilities)
+================================================================================
+
+/**
+ * Blog utility functions for SEO optimization
+ */
+import { siteOrigin } from '@/lib/site-origin';
+import { SITE_BRAND, SITE_AUTHOR } from '@/lib/brand';
+
+/**
+ * Calculate estimated reading time for blog content
+ * Based on average reading speed of 200 words per minute
+ */
+export function calculateReadingTime(content: string): number {
+  // Remove HTML tags and get plain text
+  const plainText = content.replace(/<[^>]*>/g, '').trim()
+
+  // Split by whitespace and filter out empty strings
+  const words = plainText.split(/\s+/).filter(word => word.length > 0)
+
+  // Calculate reading time (average 200 words per minute)
+  const wordsPerMinute = 200
+  const readingTimeMinutes = Math.ceil(words.length / wordsPerMinute)
+
+  return readingTimeMinutes
+}
+
+/**
+ * Extract headings from HTML content for table of contents
+ */
+export function extractHeadings(content: string): Array<{
+  id: string
+  text: string
+  level: number
+}> {
+  const headings: Array<{ id: string; text: string; level: number }> = []
+
+  // Match h1-h6 tags
+  const headingRegex = /<h([1-6])[^>]*?(?:id="([^"]*)")?[^>]*>(.*?)<\/h[1-6]>/gi
+  let match
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = parseInt(match[1])
+    const existingId = match[2]
+    const text = match[3].replace(/<[^>]*>/g, '').trim() // Remove HTML tags from heading text
+
+    // Generate ID if not exists
+    const id = existingId || text.toLowerCase()
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single
+      .trim()
+
+    headings.push({ id, text, level })
+  }
+
+  return headings
+}
+
+/**
+ * Generate article schema markup for SEO
+ */
+export function generateArticleSchema(post: {
+  title: string
+  content: string
+  excerpt: string | null
+  publishedAt: string | null
+  updatedAt?: string | null
+  author?: { name: string } | null
+  slug: string
+}) {
+  const publishedDate = post.publishedAt ? new Date(post.publishedAt).toISOString() : new Date().toISOString()
+  const modifiedDate = post.updatedAt ? new Date(post.updatedAt).toISOString() : publishedDate
+  const readingTime = calculateReadingTime(post.content)
+
+  const origin = siteOrigin();
+
+  // Extract first image from content for schema
+  const imageMatch = post.content.match(/<img[^>]+src="([^"]+)"/i)
+  const imageUrl = imageMatch ? imageMatch[1] : `${origin}/logo.png`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': post.title,
+    'description': post.excerpt || post.content.replace(/<[^>]*>/g, '').substring(0, 160) + '...',
+    'image': imageUrl,
+    'author': {
+      '@type': 'Person',
+      'name': (post as any).authorName || post.author?.name || SITE_AUTHOR,
+      'url': origin
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE_BRAND,
+      'url': origin,
+      'logo': {
+        '@type': 'ImageObject',
+        'url': `${origin}/logo.png`
+      }
+    },
+    'datePublished': publishedDate,
+    'dateModified': modifiedDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${origin}/blog/${post.slug}`
+    },
+    'url': `${origin}/blog/${post.slug}`,
+    'wordCount': post.content.replace(/<[^>]*>/g, '').split(/\s+/).length,
+    'timeRequired': `PT${readingTime}M`,
+    'genre': 'Technology',
+    'keywords': `deals, digital products, ${post.title}, discount codes`,
+    'articleSection': 'Digital Products',
+    'inLanguage': 'en-US'
+  }
+}
+
+/**
+ * Generate breadcrumb schema markup
+ */
+export function generateBreadcrumbSchema(postTitle: string, slug: string) {
+  const origin = siteOrigin();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': origin
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Blog',
+        'item': `${origin}/blog`
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': postTitle,
+        'item': `${origin}/blog/${slug}`
+      }
+    ]
+  }
+}
+
+/**
+ * Server-side function to optimize internal linking with database access
+ */
+export async function optimizeInternalLinkingServer(content: string, currentPostId: string, allPosts: Array<{ title: string; slug: string; id: string }>): Promise<string> {
+  try {
+    let optimizedContent = content
+
+    // Find potential internal links by matching blog post titles in content
+    for (const post of allPosts) {
+      if (post.id === currentPostId) continue
+
+      // Create variations of the title to match
+      const titleVariations = [
+        post.title,
+        post.title.replace(/[^\w\s]/g, ''), // Remove punctuation
+        post.title.split(' ').slice(0, 4).join(' ') // First 4 words
+      ]
+
+      for (const title of titleVariations) {
+        if (title.length < 10) continue // Skip short titles
+
+        // Create regex to find the title in content (not already linked)
+        const regex = new RegExp(`(?<!<a[^>]*>)\\b${title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b(?![^<]*</a>)`, 'gi')
+
+        // Replace with internal link (limit to 2 replacements per post to avoid over-linking)
+        let replacements = 0
+        optimizedContent = optimizedContent.replace(regex, (match) => {
+          if (replacements >= 2) return match
+          replacements++
+          return `<a href="/blog/${post.slug}" class="internal-link" style="color: var(--accent-color); text-decoration: underline;">${match}</a>`
+        })
+      }
+    }
+
+    return optimizedContent
+  } catch (error) {
+    console.error('Error optimizing internal links:', error)
+    return content
+  }
+}
+
+/**
+ * Extract and optimize images with proper alt text
+ */
+export function optimizeImageAltText(content: string, postTitle: string): string {
+  return content.replace(/<img([^>]*)src="([^"]+)"([^>]*)>/gi, (match, beforeSrc, src, afterSrc) => {
+    // Check if alt attribute already exists
+    if (match.includes('alt=')) {
+      return match
+    }
+
+    // Generate alt text from filename or use post title
+    const filename = src.split('/').pop()?.split('.')[0] || ''
+    const altText = filename
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase())
+      .trim() || `${postTitle} - Related Image`
+
+    return `<img${beforeSrc}src="${src}" alt="${altText}"${afterSrc}>`
+  })
+}
+
+/**
+ * Add structured data for images within blog posts
+ */
+export function extractImagesForSchema(content: string): string[] {
+  const images: string[] = []
+  const imgRegex = /<img[^>]+src="([^"]+)"/gi
+  let match
+
+  const origin = siteOrigin();
+  while ((match = imgRegex.exec(content)) !== null) {
+    const src = match[1]
+    // Convert relative URLs to absolute
+    const absoluteUrl = src.startsWith('http') ? src : `${origin}${src}`
+    images.push(absoluteUrl)
+  }
+
+  return images
+}
+
+/**
+ * Process content to add IDs to headings for table of contents
+ */
+export function processContentWithHeadingIds(content: string): string {
+  return content.replace(/<h([1-6])([^>]*)>(.*?)<\/h[1-6]>/gi, (match, level, attributes, text) => {
+    // Check if ID already exists
+    if (attributes.includes('id=')) {
+      return match
+    }
+
+    // Generate ID from heading text
+    const plainText = text.replace(/<[^>]*>/g, '').trim()
+    const id = plainText.toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim()
+
+    return `<h${level}${attributes} id="${id}">${text}</h${level}>`
+  })
+}
+
+
+================================================================================
+FILE 12: src/app/api/blog/[slug]/route.ts (Blog API - Get Post)
+================================================================================
+
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+interface RouteParams {
+  params: {
+    slug: string
+  }
+}
+
+// GET /api/blog/[slug] - Get a single blog post by slug
+export async function GET(request: NextRequest, { params }: RouteParams) {
+  try {
+    const post = await prisma.blogPost.findUnique({
+      where: {
+        slug: params.slug,
+        published: true
+      },
+      include: {
+        User: {
+          select: {
+            name: true,
+          }
+        }
+      }
+    })
+
+    if (!post) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+    }
+
+    return NextResponse.json(post)
+  } catch (error) {
+    console.error('Error fetching blog post:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+
+================================================================================
+FILE 13: src/app/api/blog/related/route.ts (Blog API - Related Posts)
+================================================================================
+
+import { NextRequest } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const postId = searchParams.get('postId')
+    const title = searchParams.get('title') || ''
+
+    if (!postId) {
+      return Response.json({ error: 'Post ID is required' }, { status: 400 })
+    }
+
+    // Extract keywords from the current post title for better matching
+    const titleWords = title
+      .toLowerCase()
+      .split(/[\s\-_.,!?()]+/)
+      .filter(word => word.length > 3 && !['with', 'from', 'this', 'that', 'they', 'them', 'their', 'there', 'then', 'than', 'when', 'where', 'what', 'will', 'would', 'could', 'should'].includes(word))
+      .slice(0, 5) // Take top 5 keywords
+
+    // Build search conditions for related posts
+    const searchConditions = titleWords.length > 0 ? {
+      OR: titleWords.map(word => ({
+        OR: [
+          { title: { contains: word, mode: 'insensitive' as const } },
+          { content: { contains: word, mode: 'insensitive' as const } },
+          { excerpt: { contains: word, mode: 'insensitive' as const } }
+        ]
+      }))
+    } : {}
+
+    // Fetch related posts using title/content similarity
+    const relatedPosts = await prisma.blogPost.findMany({
+      where: {
+        AND: [
+          { published: true },
+          { id: { not: postId } },
+          ...(titleWords.length > 0 ? [searchConditions] : [])
+        ]
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        publishedAt: true,
+        authorName: true, // Use string column instead of relation (backup DB compatibility)
+      },
+      orderBy: [
+        { pinned: 'desc' },
+        { publishedAt: 'desc' }
+      ],
+      take: 6
+    })
+
+    // If we don't have enough related posts based on keywords, fill with recent posts
+    if (relatedPosts.length < 3) {
+      const recentPosts = await prisma.blogPost.findMany({
+        where: {
+          AND: [
+            { published: true },
+            { id: { not: postId } },
+            { id: { notIn: relatedPosts.map(p => p.id) } }
+          ]
+        },
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          excerpt: true,
+          publishedAt: true,
+          authorName: true, // Use string column instead of relation (backup DB compatibility)
+        },
+        orderBy: [
+          { pinned: 'desc' },
+          { publishedAt: 'desc' }
+        ],
+        take: 3 - relatedPosts.length
+      })
+
+      relatedPosts.push(...recentPosts)
+    }
+
+    return Response.json({
+      posts: relatedPosts.slice(0, 3), // Limit to 3 related posts
+      total: relatedPosts.length
+    })
+
+  } catch (error) {
+    console.error('Error fetching related posts:', error)
+    return Response.json({ error: 'Failed to fetch related posts' }, { status: 500 })
+  }
+}
+
+
+================================================================================
+FILE 14: src/app/api/comments/route.ts (Comments API)
+================================================================================
+
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { z } from 'zod'
+import { randomUUID } from 'crypto'
+
+export const runtime = 'nodejs'; // IMPORTANT for Prisma on Vercel
+export const dynamic = 'force-dynamic';
+
+// Accept "", null, undefined ➜ turn into undefined (no parent)
+const ParentId = z.preprocess(
+  (v) => (v === '' || v === null || v === undefined ? undefined : v),
+  z.string().trim().min(1).optional()
+);
+
+// Validation schema for comment submission
+const CommentSchema = z.object({
+  content: z.string().trim().min(1, 'Comment must be at least 1 character').max(4000),
+  authorName: z.string().trim().min(2, 'Name must be at least 2 characters').max(100),
+  authorEmail: z.string().trim().email('Valid email required').toLowerCase().max(320),
+  blogPostId: z.string().min(1, 'Missing blog post ID').optional(),
+  postSlug: z.string().min(1, 'Missing post slug').optional(),
+  parentId: ParentId.optional(),
+  // Honeypot field (keep hidden on client)
+  website: z.string().max(0).optional().or(z.literal('')),
+}).refine((data) => {
+  return data.blogPostId || data.postSlug;
+}, { message: "Either blogPostId or postSlug is required" });
+
+// Hate speech and harmful content detection
+const BLOCKED_PATTERNS = [
+  // Racial slurs and hate speech (using partial patterns to avoid false positives)
+  /n[i1!]gg[e3]r/i,
+  /f[a@]gg[o0]t/i,
+  /k[i1!]ke/i,
+  /ch[i1!]nk/i,
+  /sp[i1!]c/i,
+  /w[e3]tb[a@]ck/i,
+  /r[a@]gh[e3][a@]d/i,
+  // Nazi/extremist content
+  /h[i1!]tl[e3]r/i,
+  /n[a@]z[i1!]/i,
+  /14\/88/i,
+  /wh[i1!]t[e3]\s*p[o0]w[e3]r/i,
+  /s[i1!]eg\s*h[e3][i1!]l/i,
+  // Homophobic slurs
+  /tr[a@]nn[y1!]/i,
+  /d[y1!]ke/i,
+  // Threats and violence
+  /k[i1!]ll\s*y[o0]urs[e3]lf/i,
+  /k[y1!]s/i,
+  /d[i1!][e3]\s*(sl[o0]wly|p[a@][i1!]nfully)/i,
+  /r[a@]p[e3]\s*(y[o0]u|h[e3]r|h[i1!]m)/i,
+]
+
+function containsHateSpeech(content: string): { isBlocked: boolean; reason?: string } {
+  const normalizedContent = content.toLowerCase().replace(/[^a-z0-9\s]/g, '')
+
+  for (const pattern of BLOCKED_PATTERNS) {
+    if (pattern.test(normalizedContent)) {
+      return { isBlocked: true, reason: 'Contains hate speech or harmful content' }
+    }
+  }
+
+  return { isBlocked: false }
+}
+
+async function parseRequest(req: Request) {
+  const ct = req.headers.get('content-type') || '';
+  if (ct.includes('application/json')) {
+    return CommentSchema.parse(await req.json());
+  }
+  // Handle form submissions
+  if (ct.includes('application/x-www-form-urlencoded') || ct.includes('multipart/form-data')) {
+    const form = await req.formData();
+    return CommentSchema.parse({
+      content: String(form.get('content') ?? form.get('comment') ?? ''),
+      authorName: String(form.get('authorName') ?? form.get('name') ?? ''),
+      authorEmail: String(form.get('authorEmail') ?? form.get('email') ?? ''),
+      blogPostId: String(form.get('blogPostId') ?? ''),
+      postSlug: String(form.get('postSlug') ?? ''),
+      parentId: form.get('parentId'),
+      website: String(form.get('website') ?? ''),
+    });
+  }
+  // Fallback
+  try {
+    return CommentSchema.parse(await req.json());
+  } catch {
+    return CommentSchema.parse({});
+  }
+}
+
+// POST /api/comments - Submit a new comment
+export async function POST(request: NextRequest) {
+  try {
+    console.log('Comment submission received');
+
+    // Parse and validate the data
+    const data = await parseRequest(request);
+    console.log('Processing comment submission:', {
+      authorName: data.authorName,
+      authorEmail: data.authorEmail,
+      blogPostId: data.blogPostId,
+      postSlug: data.postSlug
+    });
+
+    // Check honeypot (spam protection)
+    if (data.website && data.website.length > 0) {
+      console.log('Honeypot triggered, rejecting spam comment');
+      return NextResponse.json({
+        error: 'Invalid comment data',
+        details: { website: ['This field should be empty'] }
+      }, { status: 400 });
+    }
+
+    const { content, authorName, authorEmail, blogPostId, postSlug, parentId } = data;
+
+    // Resolve blog post - prefer postSlug, fallback to blogPostId
+    let blogPost;
+    if (postSlug) {
+      blogPost = await prisma.blogPost.findUnique({
+        where: { slug: postSlug, published: true },
+        select: { id: true }
+      });
+    } else if (blogPostId) {
+      blogPost = await prisma.blogPost.findUnique({
+        where: { id: blogPostId, published: true },
+        select: { id: true }
+      });
+    }
+
+    if (!blogPost) {
+      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 })
+    }
+
+    // If this is a reply, check if parent comment exists and is approved
+    if (parentId) {
+      const parentComment = await prisma.comment.findUnique({
+        where: { id: parentId },
+        select: { id: true, status: true, blogPostId: true }
+      })
+
+      if (!parentComment) {
+        return NextResponse.json({ error: 'Parent comment not found' }, { status: 404 })
+      }
+
+      if (parentComment.status !== 'APPROVED') {
+        return NextResponse.json({ error: 'Cannot reply to non-approved comments' }, { status: 400 })
+      }
+
+      if (parentComment.blogPostId !== blogPost.id) {
+        return NextResponse.json({ error: 'Invalid parent comment' }, { status: 400 })
+      }
+    }
+
+    // Content moderation - auto-approve unless severely offensive
+    const moderation = containsHateSpeech(content)
+    const status = moderation.isBlocked ? 'FLAGGED' : 'APPROVED'
+    const flaggedReason = moderation.reason || null
+
+    // Create comment - production DB requires explicit id and updatedAt
+    const now = new Date();
+    const comment = await prisma.comment.create({
+      data: {
+        id: randomUUID(), // ✅ Required by production DB
+        content: content.trim(),
+        authorName: authorName.trim(),
+        authorEmail: authorEmail.trim(),
+        blogPostId: blogPost.id,
+        parentId: parentId || null,
+        status,
+        flaggedReason,
+        createdAt: now,
+        updatedAt: now, // ✅ Required by production DB
+      },
+      select: {
+        id: true,
+        content: true,
+        authorName: true,
+        createdAt: true,
+        status: true
+      }
+    })
+
+    console.log('Comment created successfully:', comment.id);
+
+    return NextResponse.json({
+      success: true,
+      message: moderation.isBlocked
+        ? 'Comment flagged for review due to content policy violation'
+        : 'Comment posted successfully',
+      comment: {
+        id: comment.id,
+        content: comment.content,
+        authorName: comment.authorName,
+        createdAt: comment.createdAt,
+        upvotes: 0,
+        downvotes: 0,
+        userVote: null
+      }
+    })
+  } catch (err: any) {
+    console.error('Comments API error:', err);
+
+    // Zod validation errors
+    if (err?.name === 'ZodError') {
+      return NextResponse.json({
+        error: 'Invalid comment data',
+        details: err.flatten()
+      }, { status: 400 });
+    }
+
+    // Prisma duplicate key (unlikely but handle it)
+    if (err?.code === 'P2002') {
+      return NextResponse.json({
+        success: true,
+        duplicate: true,
+        message: 'Comment already submitted'
+      }, { status: 200 });
+    }
+
+    // Generic server error
+    return NextResponse.json({
+      error: 'Server error',
+      details: err?.message ?? String(err),
+      code: err?.code
+    }, { status: 500 });
+  }
+}
+
+// GET /api/comments?blogPostId=xxx OR ?postSlug=xxx - Get approved comments for a blog post
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const blogPostId = searchParams.get('blogPostId')
+    const postSlug = searchParams.get('postSlug')
+
+    if (!blogPostId && !postSlug) {
+      return NextResponse.json({ error: 'blogPostId or postSlug is required' }, { status: 400 })
+    }
+
+    // Resolve blog post
+    let post;
+    if (postSlug) {
+      post = await prisma.blogPost.findUnique({
+        where: { slug: postSlug },
+        select: { id: true }
+      });
+    } else if (blogPostId) {
+      post = { id: blogPostId };
+    }
+
+    if (!post) {
+      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 })
+    }
+
+    // Get user IP for vote status
+    const forwarded = request.headers.get('x-forwarded-for')
+    const voterIP = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown'
+
+    // Get ALL approved comments for this blog post (flattened)
+    const allComments = await prisma.comment.findMany({
+      where: {
+        blogPostId: post.id,
+        status: 'APPROVED'
+      },
+      select: {
+        id: true,
+        content: true,
+        authorName: true,
+        createdAt: true,
+        upvotes: true,
+        downvotes: true,
+        parentId: true,
+        CommentVote: {
+          where: { voterIP },
+          select: { voteType: true }
+        }
+      }
+    })
+
+    // Build nested structure programmatically (supports infinite nesting)
+    const commentMap = new Map()
+    const rootComments = []
+
+    // Transform comments and create map
+    allComments.forEach(comment => {
+      const transformedComment = {
+        ...comment,
+        userVote: comment.CommentVote.length > 0 ? comment.CommentVote[0].voteType : null,
+        CommentVote: undefined,
+        replies: []
+      }
+      commentMap.set(comment.id, transformedComment)
+    })
+
+    // Build parent-child relationships
+    allComments.forEach(comment => {
+      const transformedComment = commentMap.get(comment.id)
+      if (comment.parentId) {
+        const parent = commentMap.get(comment.parentId)
+        if (parent) {
+          parent.replies.push(transformedComment)
+        }
+      } else {
+        rootComments.push(transformedComment)
+      }
+    })
+
+    // Sort replies recursively by creation date
+    const sortReplies = (comments) => {
+      comments.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+      comments.forEach(comment => {
+        if (comment.replies.length > 0) {
+          sortReplies(comment.replies)
+        }
+      })
+    }
+
+    sortReplies(rootComments)
+    const comments = rootComments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    return NextResponse.json(comments)
+  } catch (error) {
+    console.error('Error fetching comments:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+
+================================================================================
+FILE 15: src/app/api/comments/[id]/vote/route.ts (Comment Voting API)
+================================================================================
+
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+type Vote = "UPVOTE" | "DOWNVOTE";
+
+function getClientIP(req: Request) {
+  const h = req.headers;
+  return (
+    h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    h.get("cf-connecting-ip") ||
+    h.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
+export async function POST(req: Request, { params }: { params: { id: string } }) {
+  try {
+    const { voteType } = (await req.json()) as { voteType: Vote };
+    if (voteType !== "UPVOTE" && voteType !== "DOWNVOTE") {
+      return NextResponse.json({ error: "Invalid voteType" }, { status: 400 });
+    }
+
+    const ip = getClientIP(req);
+    const commentId = params.id;
+
+    const result = await prisma.$transaction(async (tx) => {
+      // 1) Load comment
+      const comment = await tx.comment.findUnique({
+        where: { id: commentId },
+        select: { id: true, upvotes: true, downvotes: true },
+      });
+      if (!comment) {
+        return { status: 404 as const, body: { error: "Comment not found" } };
+      }
+
+      // 2) Load existing vote by composite unique (commentId, voterIP).
+      // If your Prisma model has @@unique([commentId, voterIP]) this will work.
+      // (If not, the catch fallback uses findFirst.)
+      const existing = await tx.commentVote
+        .findUnique({
+          where: { commentId_voterIP: { commentId: comment.id, voterIP: ip } },
+        })
+        .catch(() =>
+          tx.commentVote.findFirst({
+            where: { commentId: comment.id, voterIP: ip },
+          })
+        );
+
+      // 3) Apply voting rules
+      if (!existing) {
+        // Create new vote (NO updatedAt — your table doesn't have it)
+        await tx.commentVote.create({
+          data: {
+            id: crypto.randomUUID(),
+            commentId: comment.id,
+            voterIP: ip,
+            voteType, // enum in DB
+            createdAt: new Date(), // your table has this
+          },
+        });
+
+        // increment the corresponding counter
+        if (voteType === "UPVOTE") {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: { upvotes: { increment: 1 }, updatedAt: new Date() },
+          });
+        } else {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: { downvotes: { increment: 1 }, updatedAt: new Date() },
+          });
+        }
+      } else if (existing.voteType === voteType) {
+        // Toggle off (same vote twice) => remove vote + decrement the counter
+        await tx.commentVote.delete({ where: { id: existing.id } });
+
+        if (voteType === "UPVOTE") {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: { upvotes: { decrement: 1 }, updatedAt: new Date() },
+          });
+        } else {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: { downvotes: { decrement: 1 }, updatedAt: new Date() },
+          });
+        }
+      } else {
+        // Switch vote (UPVOTE -> DOWNVOTE or vice versa)
+        await tx.commentVote.update({
+          where: { id: existing.id },
+          data: {
+            voteType, // only change the enum
+            // DO NOT set updatedAt here — the table doesn't have it
+          },
+        });
+
+        if (voteType === "UPVOTE") {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: {
+              upvotes: { increment: 1 },
+              downvotes: { decrement: 1 },
+              updatedAt: new Date(),
+            },
+          });
+        } else {
+          await tx.comment.update({
+            where: { id: comment.id },
+            data: {
+              downvotes: { increment: 1 },
+              upvotes: { decrement: 1 },
+              updatedAt: new Date(),
+            },
+          });
+        }
+      }
+
+      // Return fresh counts
+      const refreshed = await tx.comment.findUnique({
+        where: { id: comment.id },
+        select: { id: true, upvotes: true, downvotes: true },
+      });
+
+      return { status: 200 as const, body: refreshed };
+    });
+
+    return NextResponse.json(result.body, { status: result.status });
+  } catch (err: any) {
+    console.error("Comment vote error:", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+
+================================================================================
+FILE 16: src/app/blog/rss/route.ts (RSS Feed)
+================================================================================
+
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { siteOrigin } from '@/lib/site-origin';
+import { SITE_BRAND, SITE_DESCRIPTION } from '@/lib/brand';
+
+export async function GET() {
+  const origin = siteOrigin();
+  const posts = await prisma.blogPost.findMany({
+    where: { published: true },
+    orderBy: { publishedAt: 'desc' },
+    take: 50,
+    select: { title: true, slug: true, excerpt: true, publishedAt: true },
+  });
+
+  const items = posts.map(p => `
+    <item>
+      <title><![CDATA[${p.title}]]></title>
+      <link>${origin}/blog/${p.slug}</link>
+      <guid>${origin}/blog/${p.slug}</guid>
+      <pubDate>${(p.publishedAt ?? new Date()).toUTCString()}</pubDate>
+      <description><![CDATA[${p.excerpt ?? ''}]]></description>
+    </item>`).join('');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+  <rss version="2.0"><channel>
+    <title>${SITE_BRAND} Blog</title>
+    <link>${origin}/blog</link>
+    <description>${SITE_DESCRIPTION}</description>
+    ${items}
+  </channel></rss>`;
+
+  return new NextResponse(xml, {
+    headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
+  });
+}
+
+
+===============================================================================
+END OF ALL BLOG FILES
+===============================================================================

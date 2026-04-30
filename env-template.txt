@@ -1,0 +1,17 @@
+# Gmail OAuth2 Configuration
+GMAIL_CLIENT_ID="your-gmail-client-id"
+GMAIL_CLIENT_SECRET="your-gmail-client-secret"
+GMAIL_REFRESH_TOKEN="your-gmail-refresh-token"
+
+# Database URL (you'll need to add this if not already present)
+DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"
+
+# NextAuth Configuration (if using authentication)
+NEXTAUTH_SECRET="your-nextauth-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Vercel Cron Jobs Security
+CRON_SECRET="your-secure-random-string-for-cron-authentication"
+
+# Google Analytics (optional)
+NEXT_PUBLIC_GA_ID="your-google-analytics-id" 

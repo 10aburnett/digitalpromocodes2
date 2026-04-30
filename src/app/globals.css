@@ -1,0 +1,544 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Variables - Default to Light Theme */
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Transition */
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  /* Spacing and Layout */
+  --border-radius-large: 12px;
+  --btn-border-radius: 6px;
+  --card-spacing: 30px;
+
+  /* Light Theme Variables (Digital Promo Codes — Slate + Cyan) */
+  --background-color: #F8FAFC;           /* slate-50, near-white */
+  --background-secondary: #FFFFFF;       /* cards mostly white */
+  --background-tertiary: #F1F5F9;        /* slate-100 highlight panels */
+  --container-color: #FFFFFF;            /* clean white containers */
+
+  --text-color: #0F172A;                 /* slate-900, deep navy */
+  --text-secondary: #334155;             /* slate-700 */
+  --text-muted: #64748B;                 /* slate-500 */
+
+  /* Teal accent — Digital Promo Codes brand color */
+  --accent-color: #0891B2;               /* cyan-600 / teal-600 */
+  --accent-hover: #0E7490;               /* cyan-700 */
+
+  --success-color: #16A34A;              /* green-600 (semantic, unchanged) */
+  --warning-color: #D97706;              /* amber-600 (semantic, unchanged) */
+  --error-color: #DC2626;                /* red-600 (semantic, unchanged) */
+
+  --border-color: #E2E8F0;               /* slate-200 */
+  --shadow-color: rgba(15, 23, 42, 0.08);/* navy-tinted neutral shadow */
+
+  --menu-item-color: #334155;            /* slate-700 */
+  --header-shadow: 0 1px 0 rgba(15, 23, 42, 0.06);
+
+  --promo-bg: #FFFFFF;
+  --promo-bg-gradient: linear-gradient(135deg, #FFFFFF, #F8FAFC); /* white → slate-50 */
+  --promo-border: 1px solid #E2E8F0;
+  --promo-shadow: 0 14px 35px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(15, 23, 42, 0.06);
+
+  --card-bg: #FFFFFF;
+  --card-border: #E2E8F0;
+
+  --input-bg: #FFFFFF;
+  --input-border: #E2E8F0;
+  --input-focus: #0891B2;                /* tie to accent */
+
+  --thread-line-color: #E2E8F0;          /* slate-200, quiet thread lines */
+}
+
+/* Dark Theme Override — Slate + Cyan */
+[data-theme="dark"] {
+  --background-color: #0F172A;           /* slate-900, navy base */
+  --background-secondary: #1E293B;       /* slate-800, main dark card background */
+  --background-tertiary: #334155;        /* slate-700, slightly lifted panels */
+  --container-color: #1E293B;
+
+  --text-color: #F1F5F9;                 /* slate-100 */
+  --text-secondary: #94A3B8;             /* slate-400 */
+  --text-muted: #64748B;                 /* slate-500 */
+
+  /* Dark accent — cyan-400 for visibility against slate-900 (lighter sibling of teal-600) */
+  --accent-color: #22D3EE;               /* cyan-400 */
+  --accent-hover: #0891B2;               /* cyan-600 / teal-600 */
+
+  --success-color: #22C55E;              /* green-500 (semantic, unchanged) */
+  --warning-color: #F59E0B;              /* amber-500 (semantic, unchanged) */
+  --error-color: #F97316;                /* orange-500 for better pop on dark (unchanged) */
+
+  --border-color: #334155;               /* slate-700 */
+  --shadow-color: rgba(0, 0, 0, 0.4);
+
+  --menu-item-color: #94A3B8;
+  --header-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+
+  --promo-bg: #1E293B;
+  --promo-bg-gradient: linear-gradient(135deg, #0F172A, #1E293B); /* navy → slate-800 */
+  --promo-border: 1px solid #334155;
+  --promo-shadow: 0 14px 35px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.4);
+
+  --card-bg: #1E293B;
+  --card-border: #334155;
+
+  --input-bg: #1E293B;
+  --input-border: #334155;
+  --input-focus: #22D3EE;
+
+  --thread-line-color: #475569;          /* slate-600, quiet on navy */
+
+  /* for blog dark override */
+  --card-bg-blog: #1E293B;
+}
+
+/* Base Styles with Transitions */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  /* REMOVED: transition: var(--theme-transition);
+     Global transitions on html/body block paint during navigation,
+     causing perceived click delay. Use .theme-transition class on
+     specific containers instead. */
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* REMOVED: transition: var(--theme-transition); - blocks paint during navigation */
+}
+
+/* Mobile-only: prevent horizontal overflow on offer pages */
+@media (max-width: 767px) {
+  .dpc-offer-container {
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-top: 1rem;
+  }
+  .dpc-offer-layout,
+  .dpc-offer-sidebar {
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+  }
+  /* Allow tables to scroll horizontally instead of being clipped */
+  .dpc-offer-main {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .product-review table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Theme-aware component styles */
+.theme-transition {
+  transition: var(--theme-transition);
+}
+
+/* Hide scrollbar for table of contents */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Custom utility classes for theme-aware styling */
+@layer utilities {
+  .bg-theme-primary {
+    background-color: var(--background-color);
+  }
+  
+  .bg-theme-secondary {
+    background-color: var(--background-secondary);
+  }
+  
+  .bg-theme-tertiary {
+    background-color: var(--background-tertiary);
+  }
+  
+  .text-theme-primary {
+    color: var(--text-color);
+  }
+  
+  .text-theme-secondary {
+    color: var(--text-secondary);
+  }
+  
+  .text-theme-muted {
+    color: var(--text-muted);
+  }
+  
+  .border-theme {
+    border-color: var(--border-color);
+  }
+  
+  .border-theme-hover:hover {
+    border-color: var(--border-hover);
+  }
+}
+
+/* Blog card styling */
+.blog-card {
+  background: linear-gradient(to right, #F8FAFC, #F1F5F9); /* slate-50 → slate-100 (neutral) */
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.blog-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  max-height: calc(1.3em * 2);
+}
+
+.blog-card-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: calc(1.5em * 3);
+  flex-grow: 1;
+}
+
+[data-theme="dark"] .blog-card {
+  background: #0F172A !important;
+}
+
+[data-theme="dark"] .blog-card * {
+  color: white !important;
+}
+
+[data-theme="dark"] .blog-card .blog-accent {
+  color: var(--accent-color) !important;
+}
+
+/* Responsive heights */
+@media (max-width: 768px) {
+  .blog-card {
+    min-height: 280px;
+  }
+}
+
+/* === Better Code tile: dark mode overrides (scoped) === */
+html.dark .better-code-tile {
+  background-color: var(--background-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+/* Any nested white panels (CardContent, wrappers, etc) → transparent in dark */
+html.dark .better-code-tile .kill-white,
+html.dark .better-code-tile .kill-white [class*="bg-white"] {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+html.dark .better-code-tile .tile-heading {
+  color: #ffffff !important;
+}
+html.dark .better-code-tile .tile-description {
+  color: #a4a5b0 !important;
+}
+html.dark .better-code-tile .tile-btn {
+  background-color: var(--accent-color) !important;
+  color: #ffffff !important;
+}
+/* Optional nicer hover */
+html.dark .better-code-tile .tile-btn:hover {
+  background-color: var(--accent-hover) !important;
+}
+
+/* ===========================
+   Mobile-only DARK fixes for marketing sections
+   Scope: .mobile-dark-section
+   =========================== */
+@media (max-width: 767px) {
+  html.dark .mobile-dark-section {
+    background: transparent !important;        /* let page dark bg through */
+    border-color: rgba(255,255,255,0.08) !important;
+  }
+
+  /* Kill any nested light surfaces (Card, panels, gray/white blocks, gradients) */
+  html.dark .mobile-dark-section [class*="bg-white"],
+  html.dark .mobile-dark-section [class*="bg-gray-50"],
+  html.dark .mobile-dark-section [class*="bg-slate-50"],
+  html.dark .mobile-dark-section [class*="from-white"],
+  html.dark .mobile-dark-section [class*="to-white"],
+  html.dark .mobile-dark-section [class*="bg-gradient"] {
+    background: transparent !important;
+    border-color: rgba(255,255,255,0.06) !important;
+    box-shadow: none !important;
+  }
+
+  /* Typography in these sections */
+  html.dark .mobile-dark-section .md-heading {
+    color: #ffffff !important;
+  }
+  html.dark .mobile-dark-section .md-body {
+    color: #a4a5b0 !important;
+  }
+  html.dark .mobile-dark-section .md-divider {
+    border-color: rgba(255,255,255,0.08) !important;
+  }
+
+  /* "Trusted by 98k+ Users" pill — teal accent, high contrast */
+  html.dark .mobile-dark-section .md-pill {
+    background: rgba(8, 145, 178, 0.22) !important;  /* teal-600 at ~22% (bumped to keep weight against navy) */
+    color: #CFFAFE !important;                       /* cyan-100 text */
+    border-color: rgba(34, 211, 238, 0.35) !important;
+    box-shadow: none !important;
+  }
+
+  /* Feature icons on circles: deep green */
+  html.dark .mobile-dark-section .md-icon {
+    background: var(--accent-color) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mobile-only: kill any top border/HR inside the stats section */
+@media (max-width: 767px) {
+  #platform-stats,
+  #platform-stats * {
+    border-top-color: transparent !important;
+  }
+  /* If an <hr> slipped in */
+  #platform-stats hr {
+    display: none !important;
+  }
+}
+
+/* === About section — force dark backgrounds on ALL cards === */
+/* Scope stays tight to the about page wrapper (.about-v2) */
+html.dark .about-v2 .about-card {
+  background-color: var(--background-secondary) !important;      /* required dark backdrop */
+  border-color: var(--border-color) !important;
+  box-shadow: none !important;
+
+  /* kill any gradient on the card itself */
+  background-image: none !important;
+  --tw-gradient-from: transparent !important;
+  --tw-gradient-to: transparent !important;
+  --tw-gradient-stops: initial !important;
+}
+
+/* …and on card pseudo-elements (some UI libs paint gradients there) */
+html.dark .about-v2 .about-card::before,
+html.dark .about-v2 .about-card::after {
+  background: var(--background-secondary) !important;
+  background-image: none !important;
+  --tw-gradient-from: transparent !important;
+  --tw-gradient-to: transparent !important;
+  --tw-gradient-stops: initial !important;
+  border-color: var(--border-color) !important;
+  box-shadow: none !important;
+}
+
+/* Neutralize nested light backgrounds/gradients just in case */
+html.dark .about-v2 .about-card [class*="bg-"],
+html.dark .about-v2 .about-card [class*="from-"],
+html.dark .about-v2 .about-card [class*="via-"],
+html.dark .about-v2 .about-card [class*="to-"],
+html.dark .about-v2 .about-card [class*="bg-gradient"] {
+  background: transparent !important;
+  background-image: none !important;
+  --tw-gradient-from: transparent !important;
+  --tw-gradient-to: transparent !important;
+  --tw-gradient-stops: initial !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Text tokens (colors only — no font-size or spacing changes) */
+html.dark .about-v2 .about-heading    { color: var(--accent-color) !important; }
+html.dark .about-v2 .about-copy-white { color: #ffffff !important; }  /* white copy */
+html.dark .about-v2 .about-copy-muted { color: #a4a5b0 !important; }  /* muted copy */ 
+
+/* Consistent tab width for plain text rendering */
+.prose { 
+  tab-size: 4; 
+}
+
+/* Preserve indents/multiple spaces inside HTML content too */
+.prose.whitespace-break-spaces,
+.prose.whitespace-break-spaces p,
+.prose.whitespace-break-spaces li,
+.prose.whitespace-break-spaces blockquote,
+.prose.whitespace-break-spaces pre {
+  white-space: break-spaces;
+}
+
+/* Hide native details/summary marker across all browsers */
+details summary {
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary::marker {
+  display: none;
+  content: '';
+}
+
+/* Fix anchor links scrolling behind fixed navbar */
+[id] {
+  scroll-margin-top: 140px;
+}
+
+/* More specific for blog content headings */
+.prose h2[id],
+.prose h3[id],
+.prose h4[id],
+article h2[id],
+article h3[id],
+article h4[id] {
+  scroll-margin-top: 140px;
+}
+
+/* Editorial Review Section Styling (.product-review from ChatGPT-generated HTML) */
+.product-review h2 {
+  display: none; /* Hide the redundant h2 since we have our own heading */
+}
+
+.product-review h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  margin: 24px 0 12px 0;
+  color: var(--text-color);
+}
+
+.product-review h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  margin: 18px 0 10px 0;
+  color: var(--text-color);
+}
+
+.product-review p {
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.product-review ul,
+.product-review ol {
+  margin: 0 0 16px 0;
+  padding-left: 24px;
+}
+
+.product-review li {
+  margin: 0 0 6px 0;
+  line-height: 1.5;
+}
+
+.product-review ul li {
+  list-style-type: disc;
+}
+
+.product-review ol li {
+  list-style-type: decimal;
+}
+
+.product-review strong {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.product-review table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.875rem;
+}
+
+.product-review th,
+.product-review td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.product-review th {
+  background-color: var(--background-tertiary);
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.product-review td {
+  background-color: var(--background-secondary);
+}

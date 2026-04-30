@@ -1,0 +1,30 @@
+name: Refresh Freshness
+on:
+  # DISABLED FOR DOMAIN DEINDEXING - RE-ENABLE ON NEW DOMAIN
+  # schedule:
+  #   - cron: "0 */6 * * *" # every 6 hours
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci || npm i
+      - run: npm run freshness:check
+      - name: Commit changes (if any)
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "dpc-bot"
+            git config user.email "bot@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: auto-check offer pages and refresh freshness"
+            git push
+          else
+            echo "No changes to commit."
+          fi

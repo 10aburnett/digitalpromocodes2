@@ -1,0 +1,322 @@
+// src/lib/buildSchema.ts
+// NOTE: never import DB here; accepts only plain objects from page/layout.
+import 'server-only';
+import { absoluteUrl } from '@/lib/urls';
+
+export type OfferViewModel = {
+  // identity
+  slug: string;
+  url: string;                   // absolute canonical for this locale page
+  inLanguage?: string;           // e.g., 'en', 'de'
+
+  // display fields
+  name: string;
+  description?: string | null;
+  images?: string[];             // absolute URLs, 0..3 items recommended
+  brand?: string | { name: string; url?: string }; // visible provider label
+
+  // commerce (must be visible on page to include)
+  price?: number | null;        // regular price shown in UI (if shown)
+  promoPrice?: number | null;   // promo price shown in UI (if shown)
+  currency?: string | null;     // ISO 4217 (e.g., 'USD','GBP','EUR')
+
+  // Promo window (only if UI shows it)
+  promoValidUntil?: string | null;    // ISO 8601 date, if the promo is time-boxed and shown
+
+  // Availability (from reliable signal per your rule)
+  availability?: 'InStock' | 'OutOfStock' | 'PreOrder' | null;
+  availabilityStarts?: string | null; // ISO 8601 start date if PreOrder and shown
+
+  // Renewal note (visible text, if you disclose renewal impact)
+  priceNote?: string | null; // e.g., "Intro price first month; renews at £39"
+
+  // ratings (only when visibly rendered AND > 0)
+  ratingValue?: number | null;
+  reviewCount?: number | null;
+
+  // Optional: individual reviews IF they are rendered on the page (mirror exactly)
+  reviews?: Array<{
+    authorName: string;          // visible author display name
+    ratingValue: number;         // 1..5 (or your scale)
+    body: string;                // visible review text (plain)
+    datePublishedISO?: string;   // ISO 8601 date if shown (e.g., '2025-07-14')
+    url?: string;                // absolute permalink if you link to it
+  }>;
+
+  // IA
+  category?: string | null;      // visible category name
+  breadcrumbs?: Array<{ name: string; url: string }>; // absolute URLs in visible order
+
+  // Primary type hint (optional; else choose Product)
+  primaryType?: 'Product' | 'Course' | 'SoftwareApplication' | 'Service';
+
+  // FAQs: must be exactly what the UI renders (same order & punctuation)
+  faq?: Array<{ question: string; answer: string }>;
+
+  // HowTo: only if UI shows genuine steps (redemption flow etc.)
+  steps?: Array<{ title: string; text: string }>;
+
+  // Internal linking (absolute URLs, ordered exactly like UI)
+  recommendedUrls?: string[];   // absolute URLs, ordered exactly like UI
+  alternativeUrls?: string[];   // absolute URLs, ordered exactly like UI
+};
+
+function brandNode(brand: OfferViewModel['brand']) {
+  if (!brand) return undefined;
+  if (typeof brand === 'string') return brand;
+  if (brand.name) {
+    const node: any = { "@type": "Organization", name: brand.name };
+    if (brand.url) node.url = brand.url;
+    return node;
+  }
+  return undefined;
+}
+
+export function buildPrimaryEntity(vm: OfferViewModel) {
+  const type = vm.primaryType ?? 'Product'; // default
+  const idSuffix =
+    type === 'Product' ? 'product'
+    : type === 'Course' ? 'course'
+    : type === 'SoftwareApplication' ? 'software'
+    : 'service';
+
+  const entity: any = {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${vm.url}#${idSuffix}`,
+    url: vm.url,
+    name: vm.name,
+  };
+
+  if (vm.description) entity.description = vm.description;
+  if (vm.inLanguage) entity.inLanguage = vm.inLanguage;
+
+  // images: filter truthy & dedupe; limit to 3
+  const imgs = (vm.images ?? []).filter(Boolean);
+  if (imgs.length) entity.image = imgs.slice(0, 3);
+
+  const brand = brandNode(vm.brand);
+  if (brand) entity.brand = brand;
+
+  // Ratings: only if both > 0 and visibly rendered
+  // Google requires bestRating, worstRating, and either reviewCount or ratingCount
+  if (vm.reviewCount && vm.reviewCount > 0 && vm.ratingValue && vm.ratingValue > 0) {
+    entity.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: Math.round(Number(vm.ratingValue) * 10) / 10, // Keep as number, round to 1 decimal
+      bestRating: 5,
+      worstRating: 1,
+      reviewCount: vm.reviewCount
+    };
+  }
+
+  // Offers block is handled in Step 3; DO NOT add here.
+  return entity;
+}
+
+export function buildBreadcrumbList(vm: OfferViewModel) {
+  const crumbs = vm.breadcrumbs && vm.breadcrumbs.length
+    ? vm.breadcrumbs
+    : [
+        { name: 'Home', url: absoluteUrl('/') },
+        ...(vm.category
+          ? [{ name: vm.category, url: absoluteUrl(`/category/${encodeURIComponent(vm.category.toLowerCase().replace(/\s+/g, '-'))}`) }]
+          : []),
+        { name: vm.name, url: vm.url }
+      ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": crumbs.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.name,
+      item: c.url
+    }))
+  };
+}
+
+export function buildOffers(vm: OfferViewModel) {
+  const offers: any[] = [];
+
+  // Guard: need currency + at least one visible NUMERIC price
+  // Price must be a number (not string like "15% off")
+  const hasRegular = vm.price != null && typeof vm.price === 'number' && vm.currency;
+  const hasPromo   = vm.promoPrice != null && typeof vm.promoPrice === 'number' && vm.currency;
+
+  if (!hasRegular && !hasPromo) return undefined;
+
+  // Default priceValidUntil: 1 year from now (ISO 8601 date)
+  const defaultValidUntil = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  // Regular price (only if UI shows it)
+  if (hasRegular) {
+    const regular: any = {
+      "@type": "Offer",
+      url: vm.url,                       // absolute URL to this page
+      price: vm.price as number,         // Must be numeric, not string
+      priceCurrency: vm.currency,
+      priceValidUntil: vm.promoValidUntil || defaultValidUntil, // Required by Google
+    };
+    // Availability: only if reliable & shown
+    if (vm.availability) {
+      regular.availability = `https://schema.org/${vm.availability}`;
+      if (vm.availability === 'PreOrder' && vm.availabilityStarts) {
+        regular.availabilityStarts = vm.availabilityStarts;
+      }
+    }
+    // Optional: renewal/price note if visibly disclosed
+    if (vm.priceNote) {
+      regular.description = vm.priceNote;
+    }
+    offers.push(regular);
+  }
+
+  // Promo price (only if UI shows it)
+  if (hasPromo) {
+    const promo: any = {
+      "@type": "Offer",
+      url: vm.url,
+      price: vm.promoPrice as number,    // Must be numeric, not string
+      priceCurrency: vm.currency,
+      priceValidUntil: vm.promoValidUntil || defaultValidUntil, // Required by Google
+    };
+    // Availability mirrors the same logic
+    if (vm.availability) {
+      promo.availability = `https://schema.org/${vm.availability}`;
+      if (vm.availability === 'PreOrder' && vm.availabilityStarts) {
+        promo.availabilityStarts = vm.availabilityStarts;
+      }
+    }
+    if (vm.priceNote) {
+      promo.description = vm.priceNote;
+    }
+    offers.push(promo);
+  }
+
+  // If we added nothing, return undefined
+  return offers.length ? offers : undefined;
+}
+
+// Normalize to plain text (keep links as plaintext). We assume inputs are already plain,
+// but this is a defensive cleanup if UI strings include simple markup.
+function toPlain(x?: string | null) {
+  if (!x) return undefined;
+  // very light strip: remove basic HTML tags if any slipped in
+  return x.replace(/<[^>]*>/g, '').trim();
+}
+
+export function buildFAQ(vm: OfferViewModel) {
+  const qa = vm.faq?.filter(q => q?.question && q?.answer).map(q => ({
+    "@type": "Question",
+    name: toPlain(q.question),
+    acceptedAnswer: { "@type": "Answer", text: toPlain(q.answer) }
+  }));
+
+  if (!qa || qa.length === 0) return undefined;
+
+  const node: any = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${vm.url}#dpc-faq`,
+    mainEntity: qa
+  };
+  if (vm.inLanguage) node.inLanguage = vm.inLanguage;
+  return node;
+}
+
+export function buildHowTo(vm: OfferViewModel) {
+  const steps = vm.steps?.filter(s => s?.title || s?.text).map((s, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: toPlain(s.title) ?? `Step ${i + 1}`,
+    text: toPlain(s.text) ?? undefined
+  }));
+
+  if (!steps || steps.length === 0) return undefined;
+
+  const node: any = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${vm.url}#dpc-howto`,
+    name: `Steps to apply a ${toPlain(vm.name)} promo code`,
+    step: steps
+  };
+  if (vm.inLanguage) node.inLanguage = vm.inLanguage;
+  return node;
+}
+
+function uniqPreserveOrder<T>(xs: T[]) {
+  const seen = new Set<string>();
+  return xs.filter((x: any) => {
+    const key = typeof x === 'string' ? x : JSON.stringify(x);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function normalizeUrls(urls?: string[], selfUrl?: string) {
+  if (!urls) return [];
+  const cleaned = urls
+    .filter(Boolean)
+    .map(u => String(u).trim())
+    .filter(u => /^https?:\/\//i.test(u));        // absolute only
+  const deduped = uniqPreserveOrder(cleaned);
+  return selfUrl ? deduped.filter(u => u !== selfUrl) : deduped;
+}
+
+export function buildItemList(
+  idSuffix: 'recommended' | 'alternatives',
+  urls: string[] | undefined,
+  selfUrl: string
+) {
+  const list = normalizeUrls(urls, selfUrl);
+  if (!list.length) return undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${selfUrl}#dpc-${idSuffix}`,
+    "name": idSuffix === 'recommended' ? "Related offers you may find useful" : "Alternative options in this category",
+    "itemListElement": list.map((u, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": u
+    }))
+  };
+}
+
+function clampRating(n: number) {
+  // If your UI uses 1..5, keep it; adjust only if needed
+  return Math.max(0, Math.min(5, n));
+}
+
+export function buildReviews(vm: OfferViewModel) {
+  const list = vm.reviews?.filter(r =>
+    r &&
+    typeof r.ratingValue === 'number' &&
+    r.authorName &&
+    r.body
+  );
+  if (!list || list.length === 0) return undefined;
+
+  return list.map((r) => {
+    const rev: any = {
+      "@type": "Review",
+      author: { "@type": "Person", name: r.authorName },
+      reviewBody: r.body,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: clampRating(r.ratingValue),
+        bestRating: 5,
+        worstRating: 1
+      }
+    };
+    if (r.datePublishedISO) rev.datePublished = r.datePublishedISO;
+    if (r.url) rev.url = r.url;
+    if (vm.inLanguage) rev.inLanguage = vm.inLanguage;
+    return rev;
+  });
+}

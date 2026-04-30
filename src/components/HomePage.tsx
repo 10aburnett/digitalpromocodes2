@@ -1,0 +1,473 @@
+'use client';
+
+import React, { useState, useCallback, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FilterState } from '@/types/offer';
+import { WhopCategory } from '@prisma/client';
+import OfferCard from '@/components/OfferCard';
+import FilterControls from '@/components/FilterControls';
+import StatisticsSection from '@/components/StatisticsSection';
+import VirtualizedOfferList from '@/components/VirtualizedOfferList';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+// Define the types for our data
+interface PromoCode {
+  id: string;
+  title: string;
+  description: string;
+  code: string | null;
+  type: string;
+  value: string;
+}
+
+interface Offer {
+  id: string;
+  name: string;
+  slug: string;
+  logo: string | null;
+  description: string;
+  rating: number;
+  displayOrder: number;
+  affiliateLink: string | null;
+  promoCodes: PromoCode[];
+}
+
+interface PaginationResponse {
+  data: any[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasMore: boolean;
+  };
+}
+
+interface HomePageProps {
+  initialOffers: any[];
+  initialTotal: number;
+  totalUsers: number;
+  key?: number;
+}
+
+export default function HomePage({ initialOffers, initialTotal, totalUsers, key }: HomePageProps) {
+  const { t } = useLanguage();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
+
+  // Initialize filters DIRECTLY from URL parameters
+  const [filters, setFilters] = useState<FilterState>(() => ({
+    searchTerm: searchParams.get('search') || '',
+    promoType: '',
+    whopCategory: (searchParams.get('whopCategory') || '') as WhopCategory | "",
+    whop: searchParams.get('whop') || '',
+    sortBy: (searchParams.get('sortBy') || '') as "" | "highest" | "lowest" | "alpha-asc" | "alpha-desc" | "newest" | "highest-rated"
+  }));
+  
+  const [whops, setWhops] = useState<any[]>(initialOffers);
+  const [pagination, setPagination] = useState({
+    page: parseInt(searchParams.get('page') || '1'),
+    totalPages: Math.ceil(initialTotal / 15),
+    total: initialTotal
+  });
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Reset all state when key changes (navigation from admin)
+  useEffect(() => {
+    if (key !== undefined) {
+      setFilters({
+        searchTerm: searchParams.get('search') || '',
+        promoType: '',
+        whopCategory: (searchParams.get('whopCategory') || '') as WhopCategory | "",
+        whop: searchParams.get('whop') || '',
+        sortBy: (searchParams.get('sortBy') || '') as "" | "highest" | "lowest" | "alpha-asc" | "alpha-desc" | "newest" | "highest-rated"
+      });
+      setWhops(initialOffers);
+      setPagination({
+        page: parseInt(searchParams.get('page') || '1'),
+        totalPages: Math.ceil(initialTotal / 15),
+        total: initialTotal
+      });
+      setIsInitialized(false);
+      setLoading(false);
+      
+      // Clear any existing timeout
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+        setSearchTimeout(null);
+      }
+    }
+  }, [key, searchParams, initialOffers, initialTotal, searchTimeout]);
+
+  // Update URL with current filter and pagination state
+  const updateURL = useCallback((newFilters: FilterState, newPage: number = 1) => {
+    const params = new URLSearchParams();
+    
+    // Add filter parameters
+    if (newFilters.searchTerm) params.set('search', newFilters.searchTerm);
+    if (newFilters.whopCategory) params.set('whopCategory', newFilters.whopCategory);
+    if (newFilters.whop) params.set('whop', newFilters.whop);
+    if (newFilters.sortBy) params.set('sortBy', newFilters.sortBy);
+    if (newPage > 1) params.set('page', newPage.toString());
+    
+    const newURL = `/${params.toString() ? `?${params.toString()}` : ''}`;
+    router.replace(newURL, { scroll: false });
+  }, [router]);
+
+  // Fetch whops data with pagination and filters
+  const fetchOffers = useCallback(async (page: number = 1, newFilters?: FilterState) => {
+    if (loading) return;
+    
+    setLoading(true);
+    
+    try {
+      const filtersToUse = newFilters || filters;
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '15'
+      });
+      
+      // Add filters to params
+      if (filtersToUse.searchTerm) params.append('search', filtersToUse.searchTerm);
+      if (filtersToUse.whopCategory) params.append('whopCategory', filtersToUse.whopCategory);
+      if (filtersToUse.whop) params.append('whop', filtersToUse.whop);
+      // Always add sortBy parameter - use 'default' if empty to ensure promo code prioritization
+      params.append('sortBy', filtersToUse.sortBy || 'default');
+      
+      const response = await fetch(`/api/whops?${params.toString()}`);
+      if (!response.ok) throw new Error('Failed to fetch whops');
+      
+      const result: PaginationResponse = await response.json();
+      
+      console.log(`Fetched page ${page}, got ${result.data.length} whops`);
+      
+      setWhops(result.data);
+      setPagination({
+        page: result.pagination.page,
+        totalPages: result.pagination.totalPages,
+        total: result.pagination.total
+      });
+      
+      // Update URL with current state
+      updateURL(filtersToUse, page);
+      
+    } catch (error) {
+      console.error('Error fetching whops:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters, loading, pagination.page, updateURL]);
+
+  // Handle filter changes with debouncing for search
+  const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
+    const updatedFilters = { ...filters, ...newFilters };
+    setFilters(updatedFilters);
+    
+    // For search term, add debouncing
+    if (newFilters.searchTerm !== undefined) {
+    // Clear existing timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+    
+      // Set new timeout for search
+      const timeout = setTimeout(() => {
+        fetchOffers(1, updatedFilters);
+      }, 150); // 150ms debounce - faster response
+      
+      setSearchTimeout(timeout);
+    } else {
+      // For other filters (category, sort, etc.), fetch immediately
+      fetchOffers(1, updatedFilters);
+    }
+  }, [filters, router, searchTimeout, fetchOffers]);
+
+  // Handle page changes - MUST pass current filters to preserve search state
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages && !loading) {
+      // Scroll to top IMMEDIATELY before any DOM updates
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      fetchOffers(newPage, filters);
+    }
+  };
+
+  // Initialize with URL parameters on mount
+  useEffect(() => {
+    if (!isInitialized) {
+      const urlFilters: FilterState = {
+        searchTerm: searchParams.get('search') || '',
+        promoType: '',
+        whopCategory: (searchParams.get('whopCategory') || '') as WhopCategory | "",
+        whop: searchParams.get('whop') || '',
+        sortBy: (searchParams.get('sortBy') || '') as "" | "highest" | "lowest" | "alpha-asc" | "alpha-desc" | "newest" | "highest-rated"
+      };
+      
+      const urlPage = parseInt(searchParams.get('page') || '1');
+      
+      // Check if URL has any filters that differ from initial state
+      const hasURLFilters = Object.values(urlFilters).some(value => value !== '') || urlPage > 1;
+      
+      if (hasURLFilters) {
+        setFilters(urlFilters);
+        fetchOffers(urlPage, urlFilters);
+      }
+      
+      setIsInitialized(true);
+    }
+  }, [isInitialized, searchParams, fetchOffers]);
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+      }
+    };
+  }, [searchTimeout]);
+
+  return (
+    <div className="mx-auto w-[90%] md:w-[95%] max-w-[1280px] mt-[50px] md:mt-0">
+      <h1 className="text-4xl font-bold text-center mt-2 mb-12">
+        <span style={{ color: 'var(--accent-color)' }}>Whop</span>
+        <span style={{ color: 'var(--text-color)' }}>PromoCodes</span>
+        <span style={{ color: 'var(--text-color)' }}> - Promo Codes, Coupons & Discounts</span>
+      </h1>
+      
+      <div className="mb-1 md:mb-12" data-filter-section>
+        <FilterControls
+          filters={filters}
+          onFilterChange={handleFilterChange}
+          casinos={[]}
+        />
+      </div>
+
+      {/* Results count */}
+      {pagination.total > 0 && (
+        <p className="mb-6 text-center mt-4 md:mt-0" style={{ color: 'var(--text-secondary)' }}>
+          Showing {((pagination.page - 1) * 15) + 1}-{Math.min(pagination.page * 15, pagination.total)} of {pagination.total} results
+        </p>
+      )}
+
+      {/* Mobile-only Pagination Controls (Top) */}
+      {pagination.totalPages > 1 && !loading && (
+        <div className="md:hidden flex justify-center items-center gap-1 sm:gap-2 mt-4 mb-6 px-2 overflow-x-auto">
+          {/* Previous Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page - 1)}
+            disabled={pagination.page === 1}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Previous</span>
+            <span className="sm:hidden">Prev</span>
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+            {getPageNumbers().map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 hover:opacity-80 text-sm sm:text-base flex-shrink-0 min-w-[36px] sm:min-w-[44px] ${
+                  pageNum === pagination.page ? 'font-bold' : ''
+                }`}
+                style={{ 
+                  backgroundColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--background-secondary)',
+                  borderColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--border-color)',
+                  color: pageNum === pagination.page ? 'white' : 'var(--text-color)'
+                }}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page + 1)}
+            disabled={pagination.page === pagination.totalPages}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Next</span>
+            <span className="sm:hidden">Next</span>
+          </button>
+        </div>
+      )}
+
+      {/* Desktop-only Pagination Controls (Top) */}
+      {pagination.totalPages > 1 && !loading && (
+        <div className="hidden md:flex justify-center items-center gap-1 sm:gap-2 mt-4 mb-6 px-2 overflow-x-auto">
+          {/* Previous Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page - 1)}
+            disabled={pagination.page === 1}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Previous</span>
+            <span className="sm:hidden">Prev</span>
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+            {getPageNumbers().map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 hover:opacity-80 text-sm sm:text-base flex-shrink-0 min-w-[36px] sm:min-w-[44px] ${
+                  pageNum === pagination.page ? 'font-bold' : ''
+                }`}
+                style={{ 
+                  backgroundColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--background-secondary)',
+                  borderColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--border-color)',
+                  color: pageNum === pagination.page ? 'white' : 'var(--text-color)'
+                }}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page + 1)}
+            disabled={pagination.page === pagination.totalPages}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Next</span>
+            <span className="sm:hidden">Next</span>
+          </button>
+        </div>
+      )}
+
+      <VirtualizedOfferList whops={whops} loading={loading} />
+      
+      {/* Loading indicator */}
+      {loading && (
+        <div className="text-center py-8">
+          <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-r-transparent" style={{ borderColor: 'var(--accent-color)', borderRightColor: 'transparent' }}></div>
+          <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>Loading...</p>
+        </div>
+      )}
+      
+      {/* Pagination Controls */}
+      {pagination.totalPages > 1 && !loading && (
+        <div className="flex justify-center items-center gap-1 sm:gap-2 mt-8 mb-8 px-2 overflow-x-auto">
+          {/* Previous Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page - 1)}
+            disabled={pagination.page === 1}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Previous</span>
+            <span className="sm:hidden">Prev</span>
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+            {getPageNumbers().map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 hover:opacity-80 text-sm sm:text-base flex-shrink-0 min-w-[36px] sm:min-w-[44px] ${
+                  pageNum === pagination.page ? 'font-bold' : ''
+                }`}
+                style={{ 
+                  backgroundColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--background-secondary)',
+                  borderColor: pageNum === pagination.page ? 'var(--accent-color)' : 'var(--border-color)',
+                  color: pageNum === pagination.page ? 'white' : 'var(--text-color)'
+                }}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => handlePageChange(pagination.page + 1)}
+            disabled={pagination.page === pagination.totalPages}
+            className="px-3 sm:px-5 py-2.5 rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 text-sm sm:text-base whitespace-nowrap flex-shrink-0"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)', 
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-color)'
+            }}
+          >
+            <span className="hidden sm:inline">Next</span>
+            <span className="sm:hidden">Next</span>
+          </button>
+        </div>
+      )}
+      
+      {/* No results message */}
+      {whops.length === 0 && !loading && (
+        <div className="col-span-full text-center py-16">
+          <div className="max-w-md mx-auto space-y-4">
+            <div
+              className="h-12 w-12 mx-auto rounded-xl flex items-center justify-center"
+              style={{
+                backgroundColor: 'rgba(5,150,105,0.10)',
+                color: 'var(--accent-color)',
+              }}
+            >
+              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold" style={{ color: 'var(--text-color)' }}>
+              No matching deals found
+            </h3>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {t('home.noResults')}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+} 

@@ -1,0 +1,78 @@
+/* Admin styles matching the site's dark theme */
+
+/* Form elements */
+input, textarea, select {
+  @apply mt-1 block w-full rounded-md bg-[#3c3f4a] border-[#404055] text-white shadow-sm focus:border-[#68D08B] focus:ring-[#68D08B] sm:text-sm px-4 py-3;
+}
+
+/* Form groups */
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-white mb-2;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply px-4 py-3 bg-[#68D08B] text-white rounded-md hover:bg-[#5abc7a] transition-colors;
+}
+
+.btn-secondary {
+  @apply px-4 py-3 border border-[#404055] rounded-md text-sm font-medium text-white hover:bg-[#3c3f4a] transition-colors;
+}
+
+.btn-danger {
+  @apply px-4 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors;
+}
+
+/* Containers */
+.admin-container {
+  @apply bg-[#292932] shadow-md rounded-lg p-8 border border-[#404055];
+}
+
+.admin-card {
+  @apply p-6 bg-[#373946] border border-[#404055] rounded-lg shadow-md hover:bg-[#3c3f4a] transition-colors;
+}
+
+/* Tables */
+.admin-table {
+  @apply min-w-full divide-y divide-[#404055];
+}
+
+.admin-table thead {
+  @apply bg-[#373946];
+}
+
+.admin-table th {
+  @apply px-6 py-4 text-left text-xs font-medium text-[#a7a9b4] uppercase tracking-wider;
+}
+
+.admin-table tbody {
+  @apply bg-[#292932] divide-y divide-[#404055];
+}
+
+.admin-table td {
+  @apply px-6 py-4 whitespace-nowrap;
+}
+
+/* Headings */
+.admin-heading {
+  @apply text-2xl font-bold text-white mb-6;
+}
+
+/* Links and interactive elements */
+.admin-link {
+  @apply text-[#68D08B] hover:text-[#5abc7a];
+}
+
+/* Error messages */
+.admin-error {
+  @apply mt-1 text-sm text-red-400;
+}
+
+/* Loading spinner */
+.admin-spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#68D08B];
+} 

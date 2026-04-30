@@ -1,0 +1,10 @@
+{
+  "crons": [],
+  "redirects": [
+    {
+      "source": "/whop/monthly-mentorship",
+      "destination": "/offer/ayecon-academy-monthly-mentorship",
+      "permanent": true
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+/* Import ReactQuill styles */
+@import 'react-quill/dist/quill.snow.css';
+
+/* Fix ReactQuill editor text visibility in admin dark theme */
+.ql-editor {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Remove this - it's interfering */
+
+.ql-editor p, .ql-editor div, .ql-editor span {
+  color: #000000 !important;
+}
+
+.ql-toolbar {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.ql-container {
+  background-color: #ffffff !important;
+}
+
+/* Custom blog content styles to ensure proper display */
+.blog-content {
+  font-family: inherit;
+  line-height: 1.7;
+}
+
+/* Ensure color formatting is preserved in blog content */
+.blog-content .ql-color-white { color: #ffffff; }
+.blog-content .ql-color-red { color: #e60000; }
+.blog-content .ql-color-orange { color: #f90; }
+.blog-content .ql-color-yellow { color: #ffff00; }
+.blog-content .ql-color-green { color: #008a00; }
+.blog-content .ql-color-blue { color: #0066cc; }
+.blog-content .ql-color-purple { color: #9933ff; }
+
+/* Fix Quill-specific formatting classes */
+.blog-content .ql-align-center { text-align: center; }
+.blog-content .ql-align-right { text-align: right; }
+.blog-content .ql-align-left { text-align: left; }
+.blog-content .ql-align-justify { text-align: justify; }
+
+/* Fix ReactQuill list display */
+.blog-content ul,
+.blog-content ol {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.blog-content ul li,
+.blog-content ol li {
+  position: relative;
+  padding-left: 1.5rem !important;
+  margin-bottom: 0.5rem;
+}
+
+.blog-content ul li::before {
+  content: "•" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--text-color) !important;
+  font-weight: bold !important;
+}
+
+.blog-content h1, .blog-content h2, .blog-content h3 {
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.blog-content h1 { font-size: 2rem; }
+.blog-content h2 { font-size: 1.75rem; }
+.blog-content h3 { font-size: 1.5rem; }
+
+.blog-content p {
+  margin-bottom: 1.25rem;
+}
+
+.blog-content strong {
+  font-weight: bold;
+}
+
+.blog-content em {
+  font-style: italic;
+}
+
+/* Removed duplicate styles - using the ones above */
+
+.blog-content ol {
+  counter-reset: list-counter;
+}
+
+.blog-content ol li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  display: block;
+  counter-increment: list-counter;
+  padding-left: 0;
+}
+
+.blog-content ol li:before {
+  content: counter(list-counter) ".";
+  color: var(--text-color);
+  font-weight: bold;
+  position: absolute;
+  left: -2rem;
+  top: 0;
+  width: 1.5rem;
+  text-align: right;
+}
+
+/* Since we prevent indentation entirely, we don't need special handling for indented bullet points */
+
+/* No nested lists since we prevent indentation */
+
+.blog-content a {
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.blog-content a:hover {
+  opacity: 0.8;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  opacity: 0.9;
+}

@@ -1,0 +1,13 @@
+<!--
+  Digital Promo Codes — OG / share-image variant of the wordmark.
+  1200×630 (Open Graph spec). Slate-50 surface, deep navy wordmark, teal underline marker.
+  Generated for the rebrand pass. Refine with a real designer later if desired.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#F8FAFC"/>
+  <g font-family="Manrope, ui-sans-serif, system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <text x="600" y="320" font-size="120" font-weight="700" letter-spacing="-2" fill="#0F172A">Digital Promo Codes</text>
+    <rect x="546" y="354" width="108" height="6" rx="3" fill="#0891B2"/>
+    <text x="600" y="430" font-size="32" font-weight="500" fill="#334155">Verified codes for digital tools, courses &amp; memberships</text>
+  </g>
+</svg>
